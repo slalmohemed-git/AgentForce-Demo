@@ -1,0 +1,6 @@
+2026-10-27T17:55Z | 98d70d6d | discovery | repo empty (no branches); org: no agent, Digital Experiences off, SvcCopilotTmpl template flows present, 0 contacts, no org-wide email, no queues
+2026-10-27T18:00Z | 98d70d6d | analysis | spec gap review written (D01-design-review)
+2026-10-27T18:20Z | 98d70d6d | design-lock | decisions D1-D4 recorded; 02-final-spec v1.0, ADR-001, ADR-002, README written locally
+2026-10-27T18:11:00Z | 98d70d6d | git | main bootstrap commit e6e99a4 (README)
+2026-10-27T18:13:00Z | 98d70d6d | git | develop: specs, ADRs, source text copy, tasks
+2026-10-27T18:13:00Z | 98d70d6d | decision | spec v1.0 locked by user; build step 2 approved
