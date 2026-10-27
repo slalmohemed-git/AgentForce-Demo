@@ -42,34 +42,35 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-27
-**Status:** on track — enableNetworksEnabled=true deployed & verified live. Project structure ready locally. Step 2 build tasks next.
+**Status:** waiting — Step 2 build locally complete; awaiting approval to create Password Support routing config in lal-devedition
 
 **Done this session**
-- Executed approved deployment to lal-devedition (deploy ID 0Afak00000q06KRCAY)
-- Verified enableNetworksEnabled=true applied in org post-deployment
-- All 9 existing local tests passed during deployment
+- Built role, portal profile, Case Origin/Reason picklist values locally
+- Built Password Support queue and routing config locally
+- Identified role description exceeds 80 chars — will fix before deploy
+- Validation found correct metadata shape needed from live org
 
 **Open items**
+- Approve or decline: create QueueRoutingConfig record in lal-devedition to retrieve correct metadata shape
+- Fix role description to ≤80 characters
 - Commit Salesforce project structure to develop branch
-- Build role for UC Portal
 - Create UC Portal site (ucportal)
 - Create portal profile
 - Create users Maria and Ken
-- Configure Case picklist values
-- Set up Password Support queue and routing
 - Create agent user
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0 (org's latest version)
+- Retrieve live QueueRoutingConfig metadata shape from org before final deploy
 
 **Blockers**
-- None
+- Awaiting approval to create QueueRoutingConfig record in production org lal-devedition
 
 **Next**
-- Commit Salesforce project structure (sfdx-project.json, .forceignore, .gitignore, force-app/) to develop
-- Build step 2 components: role, UC Portal site, portal profile, users, Case picklist, queue/routing, agent user
-- Commit all step 2 work together on develop
+- Approve or decline the QueueRoutingConfig creation command
+- If approved: retrieve metadata, fix role description, commit all step 2 work to develop
+- If declined: manually document correct routing metadata shape and proceed with local fixes
 
 **Checked live on 2026-10-27:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-27
@@ -81,24 +82,13 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: no new commit in this session run — if an earlier run committed, check the repository
-• Pushed to GitHub: nothing new pushed in this session run — if an earlier run pushed, check the repository
-• Validated (sf deploy validate): yes
-• Deployed to org: yes — lal-devedition
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+This command creates one Omni-Channel routing configuration record, "Password Support Routing" (most-available routing, priority 1, capacity weight 1, 60-second push timeout), in `lal-devedition`. The metadata deploy rejected every routing-model value it was given, so I want one real instance in the org to retrieve and copy the correct metadata shape from. It still needs your Approve, because `lal-devedition` is treated as a production org.
 
-I ran the approved command once, unchanged, and Digital Experiences is now on in `lal-devedition`. I pulled the setting back from the org afterwards and it reads `enableNetworksEnabled = true`.
+Where step 2 stands: the role, portal profile, Case Origin "Chat" and Reason "Password Reset" values, routing config and queue are written locally on `develop`. Nothing is deployed or committed yet. The check-only validation also found that the role description is over 80 characters, and I'll fix that before the real deploy.
 
-**What the deploy did** (deploy ID `0Afak00000q06KRCAY`):
-- It finished as Succeeded at 18:19:46 UTC.
-- It deployed 1 of 1 components (`CommunitiesSettings` / `Communities`), with no component errors.
-- It ran all 9 of the org's existing local tests, and all 9 passed (1.3 s).
-- Changing the setting didn't touch any other part of the org.
-
-**Not yet done:**
-- The Salesforce project structure (`sfdx-project.json` at API 68.0, `.forceignore`, `.gitignore`, `force-app/`) is still only in the local working copy of `develop`. It isn't committed or pushed yet.
-- None of t
+[Asked the person]
+This session wants to change records in the PRODUCTION org lal-devedition and stopped for your approval. Approve it to run exactly the command below once, or decline to stop it. [DATA CHANGE]
+   - Approve — Run `cd /tmp/build-98d70d6d-c047-4d6d-aaf6-068be5a06345/work/repo && sf sobject describe -s QueueRoutingConfig -o lal-devedition --json 2>/dev/null | jq -c '{c:.result.createable, req:[.result.fields[
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
