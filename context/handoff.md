@@ -42,16 +42,18 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-27
-**Status:** waiting — Build validated & ready to deploy; awaiting Approve click to proceed with org setup
+**Status:** blocked — Build files lost again; 8/43 components missing from working folder. Rebuild needed before deploy can proceed.
 
 **Done this session**
-- Confirmed build files recovered; full validated copy in working folder
-- Backed up UC Portal Customer profile and permission sets before deploy
-- 43 components ready: 23 tests passing, 91–100% coverage
+- Identified root cause: uncommitted changes in git repo weren't persisted between sessions
+- Catalogued what survived in work/src: 35 of 43 components intact
+- Catalogued what's missing: 5 test classes, test factory, SUB_Reset_Portal_Password Flow, 2 permission sets, permission set group, UC Assist agent script
 
 **Open items**
-- Click Approve to deploy 43 components to lal-devedition
-- Verify components created in org post-deploy
+- Rebuild 8 missing components in work/src (test classes, test factory, Flow, permission sets, permission set group, agent script)
+- Run check-only validation against rebuilt work/src
+- Approve deploy command pointing at work/src/force-app to lal-devedition
+- Verify all 43 components created in org post-deploy
 - Set up test data: user role, Maria & Ken users, org-wide sender, agent user with permission group
 - Publish UC Portal site
 - Publish and activate UC Assist agent
@@ -62,18 +64,16 @@
 - Use Salesforce API 68.0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Maintain build files in saved working folder to persist between runs
-- Push to develop after validation and org setup complete
+- Rebuild missing components in work/src (non-git folder) to persist between sessions
+- Push to develop immediately after validation, before deploy, to prevent file loss
 
 **Blockers**
-- Awaiting Approve click to deploy to lal-devedition (production org requires explicit approval)
+- 8 of 43 components missing from work/src; deploy cannot proceed until rebuilt and re-validated
 
 **Next**
-- Click Approve to deploy 43 components
-- Verify all components created in org
-- Create test data and configure sender address
-- Publish site and activate agent
-- Commit and push to develop
+- Rebuild missing test classes, test factory, SUB_Reset_Portal_Password Flow, permission sets, permission set group, and UC Assist agent script in work/src
+- Run check-only validation on complete 43-component set
+- Await Approve click on new deploy command pointing at work/src/force-app
 
 **Checked live on 2026-10-27:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-27
@@ -85,15 +85,16 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-The platform is holding the deploy for your Approve click. Your message in chat can't stand in for it, because `lal-devedition` counts as a production org. The command deploys the full UC Assist build, 43 components with the 5 test classes. That's the same set that just passed a fresh check-only validation (`0Afak00000q1VlNCAU`, 23 of 23 tests, coverage 91–100%). The repo comes after the org, as you asked.
+I didn't run the deploy, and nothing changed in `lal-devedition`. The approval check stopped the command before it started because the folder it deploys, `work/repo/force-app`, no longer exists.
 
-**Done this turn:**
-- **The build files weren't lost after all.** The full validated copy came back into the working folder: the Apex classes, test classes, Flow, permission sets, permission set group and UC Assist agent script. I've used that copy and set aside the partial rebuild from last turn.
-- **I backed up permissions before the deploy.** The UC Portal Customer profile and both permission sets don't exist in the org yet, so this deploy can only add permissions, never remove them.
+**What happened:** last turn the full validated build was back in `work/repo`, which is a git copy of the repo. Its changes were never committed. Uncommitted changes inside a repository aren't kept from one run to the next, so the whole folder was gone again when this run started. I searched the whole machine and the files aren't anywhere else.
 
-**After you click Approve:**
-1. I'll check in the org that the components were created.
-2. I'll set up the test data: your user's role, Maria and Ken (Ken switched off), the org-wide sender address and the agent user with its permission group. The sender address sends you a verification email to
+**What survived:** the partial rebuild in `work/src`, which isn't a git copy, came through intact. Compared with the 43 components that passed validation (`0Afak00000q1VlNCAU`):
+
+- **Present (complete):** the Verification Code object and its 10 fields, the UC Assist Setting type with its 6 fields and Default record, the 5 Apex action and service classes, the role, the portal profile, the queue, the routing config, the two Case value sets, the Communities setting and the UC Portal site file.
+- **Missing:**
+  - the code inside the 5 test classes and the test data factory (only their small companion files are there)
+  - the `SUB_Reset_Portal_Password`
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
