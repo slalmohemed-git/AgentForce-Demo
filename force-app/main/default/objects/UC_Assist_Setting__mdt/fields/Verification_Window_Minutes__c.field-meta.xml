@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verification_Window_Minutes__c</fullName>
+    <description>Minutes after verification during which a reset is allowed.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Minutes after verification during which a reset is allowed.</inlineHelpText>
+    <label>Verification Window Minutes</label>
+    <required>false</required>
+    <type>Number</type>
+    <precision>3</precision>
+    <scale>0</scale>
+</CustomField>

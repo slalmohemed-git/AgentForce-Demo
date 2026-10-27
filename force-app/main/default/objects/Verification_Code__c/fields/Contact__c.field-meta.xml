@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Contact__c</fullName>
+    <description>Customer contact the code was sent to. Used by UC Assist Send and Check actions. Spec v1.0 data model.</description>
+    <inlineHelpText>The customer the code was emailed to.</inlineHelpText>
+    <label>Contact</label>
+    <type>Lookup</type>
+    <referenceTo>Contact</referenceTo>
+    <relationshipLabel>Verification Codes</relationshipLabel>
+    <relationshipName>Verification_Codes</relationshipName>
+    <deleteConstraint>Restrict</deleteConstraint>
+    <required>true</required>
+    <trackTrending>false</trackTrending>
+</CustomField>

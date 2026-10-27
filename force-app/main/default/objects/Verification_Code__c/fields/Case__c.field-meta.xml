@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case__c</fullName>
+    <description>Case logged for this verification attempt. Audit trail for US-6. Spec v1.0, C1/C2.</description>
+    <inlineHelpText>The Case logged for this attempt.</inlineHelpText>
+    <label>Case</label>
+    <type>Lookup</type>
+    <referenceTo>Case</referenceTo>
+    <relationshipLabel>Verification Codes</relationshipLabel>
+    <relationshipName>Verification_Codes</relationshipName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+</CustomField>

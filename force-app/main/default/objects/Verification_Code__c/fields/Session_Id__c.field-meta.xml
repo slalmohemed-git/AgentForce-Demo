@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Session_Id__c</fullName>
+    <description>Messaging session that asked for the code. Binds the verification to one conversation (S3). Empty in the Builder preview.</description>
+    <inlineHelpText>The chat session that asked for this code.</inlineHelpText>
+    <label>Session Id</label>
+    <type>Text</type>
+    <length>255</length>
+    <required>false</required>
+    <unique>false</unique>
+    <trackTrending>false</trackTrending>
+</CustomField>
