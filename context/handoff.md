@@ -42,16 +42,13 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-27
-**Status:** waiting — Step 2 build locally complete; awaiting approval to create Password Support routing config in lal-devedition
+**Status:** at risk — Step 2 build locally complete; QueueRoutingConfig creation declined—routing metadata shape unresolved, blocking validation
 
 **Done this session**
-- Built role, portal profile, Case Origin/Reason picklist values locally
-- Built Password Support queue and routing config locally
-- Identified role description exceeds 80 chars — will fix before deploy
-- Validation found correct metadata shape needed from live org
+- Received decline decision on QueueRoutingConfig creation in lal-devedition
 
 **Open items**
-- Approve or decline: create QueueRoutingConfig record in lal-devedition to retrieve correct metadata shape
+- Resolve routing-model metadata shape: create record manually in Setup OR proceed without routing config in deploy
 - Fix role description to ≤80 characters
 - Commit Salesforce project structure to develop branch
 - Create UC Portal site (ucportal)
@@ -62,15 +59,16 @@
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0 (org's latest version)
-- Retrieve live QueueRoutingConfig metadata shape from org before final deploy
+- Declined: create QueueRoutingConfig record in lal-devedition for metadata retrieval
 
 **Blockers**
-- Awaiting approval to create QueueRoutingConfig record in production org lal-devedition
+- QueueRoutingConfig routing-model validation fails—correct metadata shape unknown; manual Setup creation or scope reduction needed
 
 **Next**
-- Approve or decline the QueueRoutingConfig creation command
-- If approved: retrieve metadata, fix role description, commit all step 2 work to develop
-- If declined: manually document correct routing metadata shape and proceed with local fixes
+- Choose path: (A) manually create Password Support Routing config in lal-devedition Setup, retrieve and apply format, OR (B) exclude routing config from step 2 deploy and build remaining items
+- Fix role description length to ≤80 characters
+- Commit step 2 work to develop branch
+- Resume build of portal site, profiles, and users
 
 **Checked live on 2026-10-27:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-27
@@ -82,13 +80,21 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-This command creates one Omni-Channel routing configuration record, "Password Support Routing" (most-available routing, priority 1, capacity weight 1, 60-second push timeout), in `lal-devedition`. The metadata deploy rejected every routing-model value it was given, so I want one real instance in the org to retrieve and copy the correct metadata shape from. It still needs your Approve, because `lal-devedition` is treated as a production org.
+I didn't run the command, and I haven't made the same change any other way. Nothing in `lal-devedition` changed in this step.
 
-Where step 2 stands: the role, portal profile, Case Origin "Chat" and Reason "Password Reset" values, routing config and queue are written locally on `develop`. Nothing is deployed or committed yet. The check-only validation also found that the role description is over 80 characters, and I'll fix that before the real deploy.
+**What I proposed:** creating one Omni-Channel routing configuration record in `lal-devedition`, called "Password Support Routing". It would have used most-available routing, priority 1, capacity weight 1 and a 60-second push timeout.
 
-[Asked the person]
-This session wants to change records in the PRODUCTION org lal-devedition and stopped for your approval. Approve it to run exactly the command below once, or decline to stop it. [DATA CHANGE]
-   - Approve — Run `cd /tmp/build-98d70d6d-c047-4d6d-aaf6-068be5a06345/work/repo && sf sobject describe -s QueueRoutingConfig -o lal-devedition --json 2>/dev/null | jq -c '{c:.result.createable, req:[.result.fields[
+**Why I proposed it:** the check-only validation of the step 2 metadata rejected every routing-model value I gave the routing config. My plan was to create one real record in the org, retrieve it, and copy its exact metadata format into the repo.
+
+**Why it was declined:** the org counts as a production org, so a record change needs your approval, and you declined. Your reason wasn't given, but the effect is the same: nothing was created.
+
+**Where step 2 stands now:**
+- **Deployed and checked live earlier:** Digital Experiences is on in `lal-devedition`.
+- **Written locally on `develop` only, not committed, pushed or deployed:**
+  - the project structure (`sfdx-project.json` at API 68.0, `.forceignore`, `.gitignore`)
+  - the UC account-owner role
+  - the UC Portal Customer profile
+  - the Case Origin "Chat" and Reason "Passwor
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
