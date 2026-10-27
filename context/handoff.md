@@ -42,38 +42,41 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-27
-**Status:** on track — Step 2 validated (43 components, 23 tests pass); ready to deploy. Site exists, agent script compiles. Awaiting approval to deploy.
+**Status:** on track — Step 2 validated & ready; welcome email setting flagged—turn off before deploy to preserve email quota
 
 **Done this session**
-- Validated all 43 components and 23 tests against lal-devedition (check-only)
-- Confirmed agent user can reset customer portal password
-- Confirmed org email limit (15/day) applies during tests
-- UC Portal site created and compiles without errors
+- Checked site file: sendWelcomeEmail=true found (line 53); would consume 2 of 15 daily emails
+- Confirmed sf agent publish, activate, and sf community publish command syntax and required flags
+- Verified CLI default org is wrong; all commands will use --target-org lal-devedition explicitly
 
 **Open items**
+- Turn off sendWelcomeEmail in site file (line 53: false) and re-validate before deploy
 - Deploy validated step 2 build to lal-devedition
 - Set up test data: assign role to user, create Maria and Ken, add org-wide sender address, create agent user with permissions
-- Publish UC Portal site (set to Live)
-- Publish UC Assist agent
+- Publish UC Portal site (sf community publish --name --target-org lal-devedition)
+- Publish UC Assist agent (sf agent publish authoring-bundle --api-name --target-org lal-devedition)
+- Activate UC Assist agent (sf agent activate --api-name --version --target-org lal-devedition)
 - Commit step 2 work to develop branch
-- Push to GitHub
-- Add Apex class access (<classAccesses>) to permission set for non-admin access
+- Push to GitHub; add Apex class access (classAccesses) to permission set for non-admin access
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0 (org's latest version)
 - Routing model metadata format: MOST_AVAILABLE; include capacityType INHERITED and isAttributeBased false
+- Disable sendWelcomeEmail on UC Portal site before deploy to preserve email quota for verification codes
 
 **Blockers**
 - Apex class access not wired — non-admins and Agentforce agents cannot use new Apex entry point until classAccesses added to persona permission set
 
 **Next**
+- Disable sendWelcomeEmail (line 53 → false) in local site file
+- Re-validate all 43 components and 23 tests after site file change
 - Approve deploy to lal-devedition
 - Create test data (role, Maria, Ken, sender address, agent user)
-- Publish site and agent
+- Publish site and agent, then activate agent
 - Commit and push to develop
 
-**Checked live on 2026-10-27:** the web
+**Checked live on 2026-10-27:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-27
 | | |
 |---|---|
@@ -83,20 +86,19 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: no new commit in this session run — if an earlier run committed, check the repository
-• Pushed to GitHub: nothing new pushed in this session run — if an earlier run pushed, check the repository
-• Validated (sf deploy validate): yes
-• Deployed to org: NO — not deployed to any org
-• Access wiring (new actions/tabs/pages/apps/permissions/flows/credentials): ⚠ NOT wired — Apex class access (<classAccesses>) for the new Apex entry point / action. Non-admins (and Agentforce agent actions) can't use these. Add the grant on the persona permset or ask the user.
-Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+I ran the approved command once, unchanged. It only read files and help text, so nothing changed in the org or the repo.
 
-An Approve / Decline card is now waiting for you. The command on it changes nothing: it only reads the help text for the site- and agent-publish commands and checks one local file for the site's welcome-email setting. The safety check flagged it because the text contains the word "publish".
+**What it found:**
 
-**Nothing is deployed and nothing is pushed yet.**
+1. **The UC Portal site will send welcome emails.** Line 53 of the local site file has `sendWelcomeEmail` set to `true`, using the standard `CommunityWelcomeEmailTemplate` (line 62). If I create Maria and Ken as they are, Salesforce sends each of them a welcome email. That uses 2 of the org's 15 emails a day, which the verification codes also need. I suggest turning it off (`false`) in the site file before the deploy, so the test users don't get emails we didn't plan for. Codes and the reset link aren't affected, because those are sent separately.
 
-**Validated, not yet dep
+2. **Publishing the agent:** `sf agent publish authoring-bundle` takes `--api-name` and `--target-org`. It also has optional `--skip-retrieve`, `--verbose` and `--concise` flags.
+
+3. **Activating the agent:** `sf agent activate` takes `--api-name`, `--target-org` and `--version`. If you leave out the name or version, it asks for them, so I'll always pass both.
+
+4. **Publishing the site:** `sf community publish` takes `--name` and `--target-org`, and both are required.
+
+5. **The CLI's default org is
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
