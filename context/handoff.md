@@ -42,45 +42,38 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-27
-**Status:** at risk — Build files lost between runs; step 2 partially rebuilt locally, awaiting rebuild completion & validation
+**Status:** waiting — Build validated & ready to deploy; awaiting Approve click to proceed with org setup
 
 **Done this session**
-- Rebuilt project files, Communities setting, UC Portal site (welcome email off, Live status)
-- Rebuilt UC Account Owner role, UC Portal Customer profile, Password Support queue
-- Rebuilt Case Origin/Reason values, Verification Code object with 10 fields
-- Rebuilt UC Assist Setting metadata type with 6 fields and Default record
-- Rebuilt 3 Apex classes: VerificationCodeService, SendVerificationCode, CheckVerificationCode
-- Identified root cause: uncommitted work didn't persist; now rebuilding in saved working folder
+- Confirmed build files recovered; full validated copy in working folder
+- Backed up UC Portal Customer profile and permission sets before deploy
+- 43 components ready: 23 tests passing, 91–100% coverage
 
 **Open items**
-- Confirm last 2 Apex classes (RedeemVerificationToken, ResetUserPassword) were written correctly
-- Rebuild test data factory and 5 test classes (23 tests, 90%+ coverage)
-- Rebuild SUB_Reset_Portal_Password Flow
-- Rebuild 2 permission sets and permission set group
-- Rebuild UC Assist agent script
-- Run check-only validation on complete step 2 build
-- Approve deploy to lal-devedition
-- Create test data and publish site/agent, then activate agent
+- Click Approve to deploy 43 components to lal-devedition
+- Verify components created in org post-deploy
+- Set up test data: user role, Maria & Ken users, org-wide sender, agent user with permission group
+- Publish UC Portal site
+- Publish and activate UC Assist agent
+- Commit and push validated build to develop branch
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Rebuild in saved working folder (not git clone) to persist between runs
-- Push to develop after each validation stage to prevent loss of work
+- Maintain build files in saved working folder to persist between runs
+- Push to develop after validation and org setup complete
 
 **Blockers**
-- Build files were lost; step 2 partially rebuilt but incomplete — cannot deploy until full rebuild validates
-- Apex class access not wired — non-admins and Agentforce agents cannot use new Apex entry point until classAccesses added to permission set
+- Awaiting Approve click to deploy to lal-devedition (production org requires explicit approval)
 
 **Next**
-- Reply 'continue' to resume rebuild from last 2 Apex classes
-- Verify RedeemVerificationToken and ResetUserPassword files exist and are correct
-- Complete rebuild: test factory, 5 test classes, Flow, 2 permission sets, agent script
-- Run check-only validation (target 90%+ coverage, 23 tests passing)
-- Push validated step 2 to develop branch immediately
-- Await approval to deploy to lal-devedition
+- Click Approve to deploy 43 components
+- Verify all components created in org
+- Create test data and configure sender address
+- Publish site and activate agent
+- Commit and push to develop
 
 **Checked live on 2026-10-27:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-27
@@ -92,18 +85,15 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I've paused the rebuild. Nothing was deployed, committed or pushed this turn.
+The platform is holding the deploy for your Approve click. Your message in chat can't stand in for it, because `lal-devedition` counts as a production org. The command deploys the full UC Assist build, 43 components with the 5 test classes. That's the same set that just passed a fresh check-only validation (`0Afak00000q1VlNCAU`, 23 of 23 tests, coverage 91–100%). The repo comes after the org, as you asked.
 
-**There's a problem: the build files were lost.** The local copy of the repo, which held all the uncommitted step 2 work, didn't carry over into this run. That means there's nothing to deploy right now. None of that work had reached the org: the earlier runs only did check-only validations, which leave nothing behind. The org still has only what was there before: Digital Experiences turned on, the UC Portal site (still "Under Construction") and the Password Support routing config.
+**Done this turn:**
+- **The build files weren't lost after all.** The full validated copy came back into the working folder: the Apex classes, test classes, Flow, permission sets, permission set group and UC Assist agent script. I've used that copy and set aside the partial rebuild from last turn.
+- **I backed up permissions before the deploy.** The UC Portal Customer profile and both permission sets don't exist in the org yet, so this deploy can only add permissions, never remove them.
 
-**Rebuilt this turn.** I'm writing it under the saved working folder this time, not inside a git clone, so it survives between runs:
-- The project files (API 68.0) and the Communities setting.
-- The UC Portal site file: welcome email off, the portal profile added as a member, status set to Live.
-- The UC Account Owner role, the UC Portal Customer profile and the Password Support queue.
-- The Case Origin "Chat" and Reason "Password Reset" values.
-- The Verification Code object with its 10 fields.
-- The UC Assist Setting metadata type with its 6 fields and Default record.
-- The Apex classes `VerificationCodeService`, `SendVerifi
+**After you click Approve:**
+1. I'll check in the org that the components were created.
+2. I'll set up the test data: your user's role, Maria and Ken (Ken switched off), the org-wide sender address and the agent user with its permission group. The sender address sends you a verification email to
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
