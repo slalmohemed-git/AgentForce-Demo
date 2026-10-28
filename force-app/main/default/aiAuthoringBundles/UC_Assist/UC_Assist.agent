@@ -153,6 +153,10 @@ subagent password_reset:
     label: "Password Reset"
     description: "Resets a customer's UC Portal password when they can't log in, forgot their password or are locked out."
 
+    before_reasoning:
+        if @variables.IsVerified != True:
+            transition to @subagent.identity_verification
+
     reasoning:
         instructions: ->
             if @variables.IsVerified != True:
