@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Attempts__c</fullName>
+    <description>Number of failed checks of this code. The code is Locked at Max Attempts. Spec v1.0.</description>
+    <inlineHelpText>Wrong codes entered so far.</inlineHelpText>
+    <label>Attempts</label>
+    <type>Number</type>
+    <precision>2</precision>
+    <scale>0</scale>
+    <defaultValue>0</defaultValue>
+    <required>false</required>
+    <unique>false</unique>
+    <trackTrending>false</trackTrending>
+</CustomField>

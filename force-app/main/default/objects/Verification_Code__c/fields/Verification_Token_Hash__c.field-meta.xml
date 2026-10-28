@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Verification_Token_Hash__c</fullName>
+    <description>SHA-256 of the one-time token issued when the code is verified. Indexed for the Reset Portal Password Flow redeem step. Spec v1.0, V2.</description>
+    <inlineHelpText>Hash of the one-time token issued on success.</inlineHelpText>
+    <label>Verification Token Hash</label>
+    <type>Text</type>
+    <length>64</length>
+    <externalId>true</externalId>
+    <unique>true</unique>
+    <caseSensitive>false</caseSensitive>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+</CustomField>

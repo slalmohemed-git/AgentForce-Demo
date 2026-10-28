@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Consumed_At__c</fullName>
+    <description>When a password reset used this verification. Prevents replay (S4). Spec v1.0, V3.</description>
+    <inlineHelpText>When a reset used this verification.</inlineHelpText>
+    <label>Consumed At</label>
+    <type>DateTime</type>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+</CustomField>

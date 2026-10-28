@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Max_Sends_Per_Hour__c</fullName>
+    <description>Codes a Contact can be sent in a rolling hour (S2).</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Codes a Contact can be sent in a rolling hour (S2).</inlineHelpText>
+    <label>Max Sends Per Hour</label>
+    <required>false</required>
+    <type>Number</type>
+    <precision>2</precision>
+    <scale>0</scale>
+</CustomField>
