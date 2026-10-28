@@ -42,15 +42,14 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Script 03 done: portal users Maria (active) & Ken (inactive) live. Org-wide sender address awaiting approval.
+**Status:** on track — Org-wide sender address created; awaiting verification link click. Ready for step 4: publish UC Assist agent.
 
 **Done this session**
-- Script 03 executed: portal users Maria Lopez and Ken Ito created on UC Portal Customer profile
-- Verified both portal users in lal-devedition org with correct email addresses and active/inactive states
+- Created org-wide sender address 'UC Support' <slalmohemed@gmail.com> (Id 0D2ak0000009F9VCAU) in lal-devedition, available to all profiles
 
 **Open items**
-- Approve and set up org-wide sender address (UC Support) — requires verification link click
-- Publish and activate UC Assist agent
+- Click verification link sent to slalmohemed@gmail.com to activate sender address
+- Publish and activate UC Assist agent (step 4)
 - Run tests T1–T8 and confirm all pass
 - Update handoff notes and open PR from develop to main
 
@@ -68,10 +67,9 @@
 - None
 
 **Next**
-- Approve org-wide sender address (UC Support) setup
-- Click verification link sent to slalmohemed@gmail.com to activate sender address
-- Publish and activate UC Assist agent
-- Run tests T1–T8
+- Click verification link in slalmohemed@gmail.com inbox to verify org-wide sender address
+- Confirm address shows as Verified in Setup → Organization-Wide Addresses
+- Reply 'continue' when ready to proceed with step 4: publish and activate UC Assist agent
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -83,12 +81,15 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I ran script 03 once, unchanged, and it worked. Both portal users are now in `lal-devedition` on the UC Portal Customer profile:
-- **Maria Lopez:** `maria.lopez.ucportal@example.com` (`005ak00000mIFrOAAW`), active, linked to her contact.
-- **Ken Ito:** `ken.ito.ucportal@example.com` (`005ak00000mIFrNAAW`), inactive, which test T5 needs.
-- **Licences:** 1 of your 5 Customer Community licences is used. Ken's inactive user doesn't take one.
+I ran the command once, unchanged, and the org-wide address is now in `lal-devedition`. I read it back to check:
 
-An Approve card is waiting for the last setup item. It adds the org-wide address "UC Support" <slalmohemed@gmail.com>, open to all profiles, which the verification-code emails are sent from. The org has no org-wide addresses yet. After you approve, Salesforce emails a verification link to that inbox, and you'll need to click it before the address can send.
+- **Record:** "UC Support" <slalmohemed@gmail.com>, Id `0D2ak0000009F9VCAU`, available to all profiles.
 
-Sources: checked live: `lal-devedition` (script result, User and UserLicense queries, OrgWideEmailAddress query) · not checked: nothing else
+**One thing only you can do:** Salesforce sends a verification link to slalmohemed@gmail.com, and the address can't send email until you click it. My query couldn't tell me whether it's been verified yet, because the verification status field wasn't available. After you click the link, Setup → Organization-Wide Addresses should show it as Verified.
+
+That finishes step 3. The agent user, the role, both customers, both portal users and the sender address are all in place.
+
+**Next is step 4: publish and activate UC Assist.** This makes the agent live in the org, so I'll say exactly what it will do and ask you first. Reply "continue" when you're ready. Click the verification link first if you can, because test T1 needs the code email to send.
+
+Sources: checked live: `lal-devedition` (create result, OrgWideEmailAddress query) · not checked: whether the address has been verified
 <!-- orchestrate:session-state:end -->
