@@ -50,21 +50,22 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Router v3 live & tested; T6 handoff works but verification email blocked by Gmail SPF/DMARC
+**Status:** on track — UC Assist solution documented (D01); email delivery & repo records still need fixes before deploy
 
 **Done this session**
-- Confirmed Verification_Code record created (VC-00000) and Salesforce sendEmail succeeded
-- Diagnosed email delivery failure: Gmail rejecting mail from Salesforce servers claiming @gmail.com sender
+- Wrote D01 — UC Assist Solution Summary (11 sections, 16 KB) covering deliverables, architecture, design, test status, and deployment order
+- Confirmed v3 active, Flow active, 23 Apex tests passing (91.9–100% coverage)
+- Identified repo gaps: PR #1 description outdated, spec changelog incomplete, todo.md not updated
 
 **Open items**
-- Check Gmail Spam and All Mail for verification code email; search subject:'Your UC verification code'
-- If email not found, review Setup → Email Log Files for last hour to confirm Gmail rejection
-- Fix sender address: either clear Org_Wide_Email_Address__c or verify non-Gmail domain sender
-- Rerun T6 with fresh verification code (previous one expired 10 min after 18:52 UTC)
-- Complete remaining T1–T8 tests and save as test set in Testing Center
+- Search Gmail Spam and All Mail for 'Your UC verification code' email; check Setup → Email Log Files if not found
+- Fix sender address: clear Org_Wide_Email_Address__c or verify non-Gmail domain sender
+- Rerun T6 handoff test with fresh verification code
+- Complete and test T1–T8 test suite end to end
+- Commit D01 to docs/, update PR #1 description, update spec changelog, update tasks/todo.md
+- Add Verification Code tab and read-only permission set for admin audit trail access
 - Review and merge PR #1 to main
-- Decide: keep or remove test-data setup scripts from commit
-- Schedule Deploy session to ship to production
+- Schedule Deploy session to production
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
@@ -77,16 +78,18 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 - Push router fix after publish approval to prevent loss
 
 **Blockers**
-- None
+- Verification email not arriving (Gmail SPF/DMARC rejection of Salesforce-sent mail claiming @gmail.com sender)
 
 **Next**
-- Search Gmail Spam and All Mail for 'Your UC verification code' email
-- If not found, check Setup → Email Log Files for delivery status
-- Choose sender fix: (a) clear Org_Wide_Email_Address__c or (b) verify non-Gmail domain
-- Request new verification code and rerun T6 handoff test
-- Continue T1–T8 test suite
+- Search Gmail Spam and All Mail for verification code email; check Salesforce email log if not found
+- Fix sender address configuration
+- Request new verification code and rerun T6 test
+- Commit D01 and update repo records (PR #1, spec changelog, todo.md)
+- Add admin access to Verification Code audit trail
+- Complete T1–T8 test suite
+- Merge PR #1 and schedule Deploy session
 
-**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
+**Checked live on 2026-10-28:** the repository
 ### Last session — 2026-10-28
 | | |
 |---|---|
@@ -96,18 +99,20 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-The send worked on the Salesforce side. The problem is very likely how Gmail treats the email.
+I've written the summary of deliverables and technical design as **D01 — UC Assist Solution Summary**, and it's attached to this session. It's 11 sections and about 16 KB.
 
-**What I found in `lal-devedition`:**
-- Your test created a code record (`VC-00000`, 18:52 UTC) for Maria. This is the first one ever created, so the send action ran this time. The tracer in your screenshot agrees.
-- `Messaging.sendEmail` didn't fail. If it had, the code rolls everything back and that record wouldn't exist. So Salesforce accepted the email.
-- The email goes out with **From: `slalmohemed@gmail.com`** (the verified sender address) **to `slalmohemed+maria@gmail.com`**, which is the same Gmail inbox.
+**What it covers:**
+- **Deliverables:** the specs, design review and ADRs in git, the 43 Salesforce components, and the setup scripts and test data.
+- **Architecture:** option B, two subagents, and the three controls that stop an unverified reset (the action gate, a forced hand-off to verification, and a token re-check on the server).
+- **Detailed design:** the Agent Script subagents and variables, versions 1 to 3, the Verification Code object and its status lifecycle, the settings, the Apex classes with test coverage, the Flow steps, and the security controls.
+- **Status of each user story:** US-4 is fully met. The others are built but haven't been tested end to end yet. Live transfer to a human for US-5 is still out of scope.
+- **Open items, deployment order for a new org, and next steps.**
 
-**Why it probably isn't in your inbox:** Salesforce sends from its own mail servers, not Google's, while claiming to be from a `@gmail.com` address. Gmail's sender checks (SPF/DMARC) fail for that kind of email, so Gmail often sends it to Spam or rejects it without telling you. It's worse when the From and To addresses are the same mailbox. This is my best explanation, not something I've confirmed. I can't see Gmail or Salesforce's outbound mail log from here.
-
-**Please check now:**
-1. In Gmail, search `subject:"Your UC verification code"` in **Spam** and **All Mail**.
-2. If it
+**Checked in `lal-devedition` before writing:**
+- Version 3 of `UC_Assist` is the active version.
+- The Flow is active.
+- All 23 Apex tests passed in the last validation, with coverage between 91.9% and 100% per class.
+- P
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
