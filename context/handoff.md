@@ -41,17 +41,15 @@
 <!-- orchestrate:session-state:start -->
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
-### Engagement state — 2026-10-27
-**Status:** on track — Build committed to develop; 43 components ready for deploy to lal-devedition. Next: deploy & verify in org.
+### Engagement state — 2026-10-28
+**Status:** on track — Build complete on develop; 43 components validated & ready for deploy to lal-devedition. Approve card waiting.
 
 **Done this session**
-- Rebuilt all 8 missing components in work/src
-- Committed complete 43-component set to develop branch (commit 0eb8642)
-- Pushed to GitHub; verified all 14 metadata folders present
-- Confirmed 23/23 tests passing in validated build
+- Confirmed 43-component build ready for deploy (validation 0Afak00000q5vvoCAA: 43/43 components, 23/23 tests passing)
+- Backed up org permissions pre-deploy
 
 **Open items**
-- Deploy 43 components to lal-devedition from develop branch
+- Approve & execute deploy of 43 components to lal-devedition from develop branch
 - Verify all 43 components created in org post-deploy
 - Set up test data: user role, Maria & Ken users, org-wide sender, agent user with permission group
 - Publish UC Portal site
@@ -64,21 +62,20 @@
 - Use Salesforce API 68.0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Commit to develop immediately after validation to prevent file loss
-- Deploy from develop branch files (not local work folder)
+- Deploy from develop branch files (commit 0eb8642)
 
 **Blockers**
 - None
 
 **Next**
-- Deploy 43 components to lal-devedition from develop branch (will receive Approve card)
+- Approve the waiting deploy card to execute 43-component deploy to lal-devedition
 - Verify each of 43 components exists in org post-deploy
 - Set up test data: role, Maria & Ken users, org-wide sender, agent user + permission group
 - Publish UC Portal site and UC Assist agent
 - Run tests T1–T8
 
-**Checked live on 2026-10-27:** the repository
-### Last session — 2026-10-27
+**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
+### Last session — 2026-10-28
 | | |
 |---|---|
 | Type | BUILD |
@@ -87,25 +84,5 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: yes (branch develop)
-• Pushed to GitHub: yes
-• Validated (sf deploy validate): NOT verified
-• Deployed to org: no deploy in this session run — if an earlier run deployed, verify in the target org
-Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-I've pushed the build to `develop`, so it can't be lost between runs any more. This was step 1 of the plan.
-
-**What was pushed:**
-- One commit, `0eb8642`, on `develop` in `slalmohemed-git/AgentForce-Demo`.
-- I checked GitHub afterwards: the branch now points at `0eb8642`, and all 14 metadata folders are in `force-app/main/default`.
-- It holds 55 build files plus the project files. That's the full set of 43 components that passed check-only validation `0Afak00000q1VlNCAU`, with 23 of 23 tests passing.
-- Before committing, I updated my local copy with 13 newer commits from GitHub `develop`. They only changed the engagement context files, so nothing on the branch was overwritten.
-- Nothing went to `main`.
-
-**Status:**
-- Commi
-
-_[summary truncated — see the session record for the full text]_
+An Approve card is waiting for you. The command deploys the 43 UC Assist components and runs the 5 test classes in `lal-devedition`, all from the files on `develop`. It's the same set that just passed a fresh check-only validation (`0Afak00000q5vvoCAA`, 43 of 43 components, 23 of 23 tests). I've backed up the org's current permissions, so the deploy can only add permissions. Once you approve, I'll run it and then check that each component exists in the org.
 <!-- orchestrate:session-state:end -->
