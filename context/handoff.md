@@ -42,14 +42,13 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Build complete on develop; 43 components validated & ready for deploy to lal-devedition. Approve card waiting.
+**Status:** waiting — Build ready; deploy approval consumed by safety check. Fresh permissions backup taken. New Approve card waiting.
 
 **Done this session**
-- Confirmed 43-component build ready for deploy (validation 0Afak00000q5vvoCAA: 43/43 components, 23/23 tests passing)
-- Backed up org permissions pre-deploy
+- Took fresh org permissions backup (UC Portal Customer profile & permission sets confirmed absent)
 
 **Open items**
-- Approve & execute deploy of 43 components to lal-devedition from develop branch
+- Approve & execute deploy of 43 components to lal-devedition (new Approve card waiting)
 - Verify all 43 components created in org post-deploy
 - Set up test data: user role, Maria & Ken users, org-wide sender, agent user with permission group
 - Publish UC Portal site
@@ -62,13 +61,13 @@
 - Use Salesforce API 68.0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Deploy from develop branch files (commit 0eb8642)
+- Deploy from develop branch files (commit 0eb8642 + later context-only commits)
 
 **Blockers**
 - None
 
 **Next**
-- Approve the waiting deploy card to execute 43-component deploy to lal-devedition
+- Approve the new waiting Approve card to execute 43-component deploy to lal-devedition
 - Verify each of 43 components exists in org post-deploy
 - Set up test data: role, Maria & Ken users, org-wide sender, agent user + permission group
 - Publish UC Portal site and UC Assist agent
@@ -84,5 +83,7 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-An Approve card is waiting for you. The command deploys the 43 UC Assist components and runs the 5 test classes in `lal-devedition`, all from the files on `develop`. It's the same set that just passed a fresh check-only validation (`0Afak00000q5vvoCAA`, 43 of 43 components, 23 of 23 tests). I've backed up the org's current permissions, so the deploy can only add permissions. Once you approve, I'll run it and then check that each component exists in the org.
+Nothing was deployed yet. Your approval was used up on the first run, when the safety check stopped the command and asked for a fresh permissions backup. I've taken that backup: it confirms the UC Portal Customer profile and the two permission sets don't exist in the org yet, so this deploy can only add permissions.
+
+There's a new Approve card waiting for the same command. It deploys the 43 UC Assist components from `develop` (commit `0eb8642` plus a later commit that only touches the context files) to `lal-devedition`, and runs the 5 test classes. Once you approve, I'll run it and then check in the org that each component exists.
 <!-- orchestrate:session-state:end -->
