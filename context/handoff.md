@@ -42,14 +42,16 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** waiting — Deploy B live (43/43 components). Awaiting approval to set up test data (script 01: UC Account Owner role + agent user).
+**Status:** on track — Script 01 done: agent user + Account Owner role live. Script 02 awaiting approval.
 
 **Done this session**
-- None
+- Script 01 executed: UC Assist Agent user created (005ak00000mI9ijAAC), UC_Assist_Agent permission set assigned, admin user given UC Account Owner role
 
 **Open items**
-- Approve script 01: assign UC Account Owner role to admin, create UC Assist Agent user, assign permission set group
-- Run scripts 02–03 and org-wide sender address setup (likely requiring separate approvals)
+- Approve script 02 (Lopez Freight and Ito Logistics accounts + contacts)
+- Run script 02 and verify accounts and contacts in org
+- Approve and run script 03 (portal users Maria and Ken)
+- Approve and set up org-wide sender address
 - Publish and activate UC Assist agent
 - Run tests T1–T8 and confirm all pass
 - Update handoff notes and open PR from develop to main
@@ -68,12 +70,10 @@
 - None
 
 **Next**
-- Approve script 01 (UC Account Owner role + agent user creation)
-- Run script 01 and verify result in org
-- Approve and run scripts 02–03 (Maria and Ken as portal users)
-- Approve and set up org-wide sender address
-- Publish and activate UC Assist agent
-- Run tests T1–T8
+- Approve script 02 (accounts and contacts)
+- Run script 02 and verify Lopez Freight and Ito Logistics accounts with contacts in org
+- Approve script 03 (portal users)
+- Run script 03 and verify Maria and Ken as portal users
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -85,5 +85,14 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-Nothing has changed in the org yet. An Approve card is waiting for script 01. It gives your admin user the UC Account Owner role, creates the "UC Assist Agent" user without sending an email, and assigns it the UC_Assist_Agent permission set group. Once you approve, I'll run it, check the result, and then go on to scripts 02 and 03 and the org-wide address. Each of those will probably ask for its own approval.
+Script 01 ran once, unchanged, and worked. I checked the results in `lal-devedition`:
+- **Agent user:** "UC Assist Agent" (`ucassist.agent.e68b5eeb6b@example.com`, Id `005ak00000mI9ijAAC`) is created and active, on the Einstein Agent User profile with the Einstein Agent licence.
+- **Permission set group:** `UC_Assist_Agent` is assigned to the agent user.
+- **Your admin user:** now has the UC Account Owner role.
+
+The agent user has no role. Einstein Agent users don't need one, so that's fine.
+
+An Approve card is now waiting for script 02. It creates the Lopez Freight and Ito Logistics accounts, with Maria Lopez (slalmohemed+maria@gmail.com) and Ken Ito (slalmohemed+ken@gmail.com) as their contacts. Once you approve, I'll check them in the org and go on to script 03, the portal users.
+
+Sources: checked live: `lal-devedition` (script result, user, permission set assignment and role queries) · not checked: nothing else
 <!-- orchestrate:session-state:end -->
