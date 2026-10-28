@@ -42,16 +42,14 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Script 02 done: Lopez Freight & Ito Logistics accounts + contacts live. Script 03 awaiting approval.
+**Status:** on track — Script 03 done: portal users Maria (active) & Ken (inactive) live. Org-wide sender address awaiting approval.
 
 **Done this session**
-- Script 02 executed: Lopez Freight and Ito Logistics accounts created with Maria Lopez and Ken Ito contacts
-- Verified accounts and contacts in lal-devedition org
+- Script 03 executed: portal users Maria Lopez and Ken Ito created on UC Portal Customer profile
+- Verified both portal users in lal-devedition org with correct email addresses and active/inactive states
 
 **Open items**
-- Approve script 03 (portal users Maria and Ken)
-- Run script 03 and verify portal users in org
-- Approve and set up org-wide sender address (UC Support)
+- Approve and set up org-wide sender address (UC Support) — requires verification link click
 - Publish and activate UC Assist agent
 - Run tests T1–T8 and confirm all pass
 - Update handoff notes and open PR from develop to main
@@ -70,9 +68,8 @@
 - None
 
 **Next**
-- Approve script 03 (portal users Maria active, Ken deactivated)
-- Run script 03 and verify both portal users on UC Portal Customer profile in org
-- Set up and approve org-wide sender address (UC Support)
+- Approve org-wide sender address (UC Support) setup
+- Click verification link sent to slalmohemed@gmail.com to activate sender address
 - Publish and activate UC Assist agent
 - Run tests T1–T8
 
@@ -86,12 +83,12 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-Script 02 ran once, unchanged, and worked. I checked `lal-devedition` afterwards and both customers are there:
-- **Lopez Freight** (1 account), with contact **Maria Lopez** (slalmohemed+maria@gmail.com, `003ak00002K5ZJxAAN`).
-- **Ito Logistics** (1 account), with contact **Ken Ito** (slalmohemed+ken@gmail.com, `003ak00002K5ZJyAAN`).
-- Your admin user owns both accounts and has the UC Account Owner role. Customer portal users need their account's owner to have a role, so script 03 can create them.
+I ran script 03 once, unchanged, and it worked. Both portal users are now in `lal-devedition` on the UC Portal Customer profile:
+- **Maria Lopez:** `maria.lopez.ucportal@example.com` (`005ak00000mIFrOAAW`), active, linked to her contact.
+- **Ken Ito:** `ken.ito.ucportal@example.com` (`005ak00000mIFrNAAW`), inactive, which test T5 needs.
+- **Licences:** 1 of your 5 Customer Community licences is used. Ken's inactive user doesn't take one.
 
-Script 03 hasn't run yet and is waiting for your Approve click. It creates the portal users on the UC Portal Customer profile without sending welcome emails. Maria stays active and Ken is deactivated, which test T5 needs. This uses 2 of your 5 Customer Community licences. Once you approve, I'll check both users and then add the "UC Support" org-wide address.
+An Approve card is waiting for the last setup item. It adds the org-wide address "UC Support" <slalmohemed@gmail.com>, open to all profiles, which the verification-code emails are sent from. The org has no org-wide addresses yet. After you approve, Salesforce emails a verification link to that inbox, and you'll need to click it before the address can send.
 
-Sources: checked live: `lal-devedition` (script result, Contact and Account queries) · not checked: nothing else
+Sources: checked live: `lal-devedition` (script result, User and UserLicense queries, OrgWideEmailAddress query) · not checked: nothing else
 <!-- orchestrate:session-state:end -->
