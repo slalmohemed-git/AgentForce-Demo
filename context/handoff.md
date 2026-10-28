@@ -42,13 +42,13 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** waiting — Build ready; deploy approval consumed by safety check. Fresh permissions backup taken. New Approve card waiting.
+**Status:** waiting — Deploy blocked by safety check loop; new Approve card waiting. Fresh permissions backup confirms no UC Portal profile/sets exist yet.
 
 **Done this session**
-- Took fresh org permissions backup (UC Portal Customer profile & permission sets confirmed absent)
+- Confirmed deploy hasn't executed; lal-devedition unchanged
 
 **Open items**
-- Approve & execute deploy of 43 components to lal-devedition (new Approve card waiting)
+- Approve new Approve card to execute 43-component deploy to lal-devedition
 - Verify all 43 components created in org post-deploy
 - Set up test data: user role, Maria & Ken users, org-wide sender, agent user with permission group
 - Publish UC Portal site
@@ -64,14 +64,11 @@
 - Deploy from develop branch files (commit 0eb8642 + later context-only commits)
 
 **Blockers**
-- None
+- Safety check requests new permissions backup before each deploy attempt, consuming approval; if third approval also triggers backup request, escalate as bug to Orchestrate team
 
 **Next**
-- Approve the new waiting Approve card to execute 43-component deploy to lal-devedition
-- Verify each of 43 components exists in org post-deploy
-- Set up test data: role, Maria & Ken users, org-wide sender, agent user + permission group
-- Publish UC Portal site and UC Assist agent
-- Run tests T1–T8
+- Approve the waiting Approve card to execute 43-component deploy
+- If safety check asks for third backup, report loop as bug; otherwise proceed to verify 43 components in org post-deploy
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -83,7 +80,15 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-Nothing was deployed yet. Your approval was used up on the first run, when the safety check stopped the command and asked for a fresh permissions backup. I've taken that backup: it confirms the UC Portal Customer profile and the two permission sets don't exist in the org yet, so this deploy can only add permissions.
+Nothing was deployed. `lal-devedition` hasn't changed, and the build on `develop` is untouched.
 
-There's a new Approve card waiting for the same command. It deploys the 43 UC Assist components from `develop` (commit `0eb8642` plus a later commit that only touches the context files) to `lal-devedition`, and runs the 5 test classes. Once you approve, I'll run it and then check in the org that each component exists.
+**Why it keeps stopping:** this is the same thing that happened last time.
+1. My first run of your approved command was stopped by the safety check before it started. Each time, the check asks for a new permissions backup in a new dated folder, even though earlier backups exist.
+2. That blocked attempt still used up your approval.
+3. I took the backup it asked for. It's read-only and confirms the UC Portal Customer profile and both permission sets don't exist in the org yet, so the deploy can only add permissions.
+4. When I re-ran the same command, it needed a fresh approval because the first one was gone.
+
+There's a new Approve card waiting for the same command. It deploys the 43 UC Assist components from `develop` to `lal-devedition` and runs the 5 test classes. The backup the check asked for is now in place.
+
+If you approve and the check asks for a new backup a third time, the loop is in the safety check itself and retrying won't fix it. I'll tell you that rather than go round again, and you could report it to the Orchestrate team as a bug in the deploy safety check.
 <!-- orchestrate:session-state:end -->
