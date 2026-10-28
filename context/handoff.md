@@ -45,13 +45,13 @@
 **Status:** on track — Step 4 ready: publish command validated, awaiting approval to execute UC_Assist agent publish
 
 **Done this session**
-- Ran read-only safety check for publish and activate commands
-- Confirmed develop branch and command options (--api-name, --target-org, --version)
-- Identified scripts/ folder not yet committed — will include in step 6 handoff
+- Confirmed Agent Platform Builder permission set exists in org
+- Identified permission set not yet assigned to admin user
 
 **Open items**
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Confirm address shows as Verified in Setup → Organization-Wide Addresses
+- Approve permission set assignment for admin user to Agent Platform Builder
 - Approve and execute publish UC_Assist authoring bundle to lal-devedition (creates version 1)
 - Approve and execute activate version 1 in lal-devedition
 - Verify agent and active version exist in org after activation
@@ -72,9 +72,10 @@
 - None
 
 **Next**
+- Approve permission set assignment for admin user
+- Verify assignment succeeded in org
 - Approve publish UC_Assist authoring bundle command
 - After publish succeeds, approve activate version 1 command
-- Verify agent and active version in lal-devedition org
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -86,7 +87,5 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I ran the read-only check once, unchanged. It confirmed you're on `develop`. It also showed the options for the two commands: publish takes `--api-name` and `--target-org`, and activate takes `--api-name`, `--target-org` and an optional `--version`. One thing it found: the `scripts/` folder with the three test-data setup scripts isn't committed yet. I'll commit it with the handoff in step 6.
-
-An Approve card is now waiting for the real publish. It publishes the `UC_Assist` authoring bundle to `lal-devedition`, which creates version 1 of the agent. Once you approve, I'll check the result, ask for approval to activate version 1, and then confirm in the org that the agent and its active version exist.
+I've checked that the Agent Platform Builder permission set (`0PSak00000fhscuGAA`) exists in the org and isn't assigned to your admin user (`005ak00000mAmvmAAC`) yet. The command waiting for your Approve click creates that one assignment. After you approve it, I'll check that it took and then ask you to approve the same UC_Assist publish again.
 <!-- orchestrate:session-state:end -->
