@@ -42,20 +42,17 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Deploy A done (25/25 components in lal-devedition). Deploy B waiting for approval (18 components, dry run passed).
+**Status:** at risk — Deploy A done (25/25). Deploy B blocked by safety check consuming approvals—bug suspected, needs escalation.
 
 **Done this session**
-- Deploy A executed: 25 components deployed to lal-devedition (0Afak00000q8PXyCAM)
-- Verified all 25 Deploy A components created in org (Verification Code object, UC Assist Setting, role, queue, routing, Case values, Communities)
-- Deploy B dry run passed: 18 components, 23 tests, 0 errors (0Afak00000q8VtVCAU)
-- Permissions backup taken before Deploy B approval step
+- None
 
 **Open items**
-- Approve Deploy B Approve card to execute 18-component deploy (Apex, Flow, site, agent, profile, permission sets, tests)
+- Escalate Deploy B safety check bug to Orchestrate team (4th approval consumed without execution)
+- Approve Deploy B Approve card to execute 18-component deploy
 - Verify Deploy B components created in lal-devedition post-execution
 - Run tests T1–T8 and confirm all pass
-- Publish UC Portal site
-- Publish and activate UC Assist agent
+- Publish UC Portal site and activate UC Assist agent
 - Set up test data
 - Open PR from develop to main with final state
 
@@ -68,14 +65,12 @@
 - Split deploy into two: Deploy A (objects, settings, role, queue, routing, Case values, Communities) then Deploy B (permissions, Apex, Flow, site, agent, tests)
 
 **Blockers**
-- None
+- Deploy B safety check repeatedly consuming approvals without executing deploy (4 times)—suspected bug in Orchestrate safety check logic
 
 **Next**
-- Approve Deploy B Approve card to execute 18-component deploy
-- Verify 18 Deploy B components created in lal-devedition
-- Confirm all 5 test classes pass
-- Publish UC Portal site and activate UC Assist agent
-- Set up test data for validation
+- Report Deploy B safety check bug to Orchestrate team with session ID 98d70d6d-c047-4d6d-aaf6-068be5a06345
+- Approve Deploy B Approve card once (will execute immediately if bug is fixed)
+- If blocked again, pause and wait for Orchestrate team response before further approvals
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -87,24 +82,9 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: no new commit in this session run — if an earlier run committed, check the repository
-• Pushed to GitHub: nothing new pushed in this session run — if an earlier run pushed, check the repository
-• Validated (sf deploy validate): yes
-• Deployed to org: yes — lal-devedition · NOT read back from the org: the deploy's result listed no components (run it with --json, and not --async, so Orchestrate can check the org)
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Deploy B hasn't run, and nothing has changed in `lal-devedition`. The safety check stopped your approved command before it started and asked for another permissions backup in a new folder. That blocked attempt used up your approval, so a new Approve card is waiting for the same unchanged command.
 
-Deploy A is done: all 25 components are now in `lal-devedition`. Deploy B, the last 18 components, is waiting for your Approve click.
+The backup it asked for is now saved. It shows the UC Portal Customer profile and both permission sets don't exist in the org yet, so this deploy can only add permissions. The command deploys the last 18 components (Apex classes, the Flow, the UC Portal site, the UC Assist agent script, the profile, both permission sets and the group) and runs the 5 test classes. Its dry run passed earlier with 23 of 23 tests.
 
-**Deploy A result:** deploy `0Afak00000q8PXyCAM` succeeded, with 25 of 25 components deployed and 0 errors. I checked the org afterwards and everything is there:
-- the Verification Code object with all 10 fields
-- the UC Assist Setting type and its Default record
-- the UC Account Owner role
-- the Password Support queue and its routing config
-- the "Chat" Case Origin value and the "Password Reset" Case Reason value
-- the Communities setting
-
-**Deploy B (the waiting Approve card):** it
-
-_[summary truncated — see the session record for the full text]_
+This is the fourth time the check has used up an approval like this. That looks like a bug in the deploy safety check, and it's worth reporting to the Orchestrate team. When you approve, I'll run the command once. If it's blocked again I'll tell you straight away instead of going round the loop.
 <!-- orchestrate:session-state:end -->
