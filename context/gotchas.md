@@ -25,7 +25,10 @@ that it is real.
 
 <!-- Salesforce / platform behaviour that is surprising, undocumented, or documented-but-wrong. -->
 
--
+- **`sf agent publish authoring-bundle` fails with "User doesn't have access to agent" (HTTP 401) even
+  though `validate` passes.** Two permission sets were missing: **Agent Platform Builder** on the user
+  doing the publish, and **Agentforce Service Agent User** on the agent's running user. Assign both, then
+  publish. *Hit 2026-10-28, took two failed publishes to find.*
 
 ## This client's environment
 
