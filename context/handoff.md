@@ -50,15 +50,14 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Router fix v3 published to lal-devedition; awaiting activation approval to test handoff
+**Status:** on track — Router fix v3 activated live in lal-devedition; ready to test T6 handoff flow
 
 **Done this session**
-- Published UC_Assist version 3 (commit 7cd0587 with Password Reset fix) to lal-devedition
-- Verified version 3 exists in org but inactive; version 2 remains live
+- Activated UC_Assist version 3 as live agent in lal-devedition
+- Verified version 3 (commit 7cd0587) now Active; versions 1 & 2 Inactive
 
 **Open items**
-- Approve activating version 3 of UC_Assist in lal-devedition
-- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com to verify handoff works
+- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com; verify handoff to Identity Verification
 - Check slalmohemed@gmail.com inbox for verification code email after T6
 - Complete remaining T1–T8 tests and save as test set in Testing Center
 - Review and merge PR #1 to main
@@ -79,8 +78,6 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 - None
 
 **Next**
-- Approve activating version 3 of UC_Assist
-- Verify version 3 shows as Active in org after activation
 - Rerun T6 in Preview with slalmohemed+maria@gmail.com; type 'I forgot my password' and verify handoff to Identity Verification
 - Check slalmohemed@gmail.com inbox for verification code email
 - Complete remaining T1–T8 tests
@@ -97,15 +94,23 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I ran the publish command once, exactly as approved, and it succeeded. It reported 1 component retrieved and 3 deployed. I checked the org afterwards, and version 3 of `UC_Assist` now exists but isn't live yet. It's built from commit `7cd0587` on `develop`, which has the Password Reset fix.
+I ran the command once, exactly as approved, and version 3 of `UC_Assist` is now the live agent in `lal-devedition`. The command returned `success: true` for version 3. I then checked the org, and versions 2 and 3 both changed at 18:30 UTC:
 
-| Version | Status | Created (UTC) |
+| Version | Status | Id |
 |---|---|---|
-| 1 | Inactive | 15:44 |
-| 2 | **Active** | 17:32 |
-| 3 | Inactive | 18:06 |
+| 1 | Inactive | `0X9ak000007eFPJCA2` |
+| 2 | Inactive | `0X9ak000007ePlFCAU` |
+| 3 | **Active** | `0X9ak000007eRjpCAE` |
 
-You'll see an Approve card for `sf agent activate --api-name UC_Assist --version 3`. Approving it switches the live agent to version 3. After that I'll check it shows as Active, and you can rerun T6 in the Preview panel using `slalmohemed+maria@gmail.com`.
+Version 3 is built from commit `7cd0587` on `develop`, which is part of PR #1. It includes both fixes: the router now always hands off, and Password Reset now always sends an unverified customer to Identity Verification.
 
-Sources: checked live: `lal-devedition` (BotVersion query after the publish), the `repo2` checkout (commit `7cd0587`, fix present) · not checked: how version 3 behaves, since it isn't active yet
+**Next: rerun T6**
+1. Open UC Assist in Agentforce Builder and check you're on version 3. Use the **Preview** panel, not the Builder's own assistant chat.
+2. Type `I forgot my password`. In the plan tracer you should see the conversation go to Identity Verification, and it should ask for your email.
+3. Give `slalmohemed+maria@gmail.com`. Then look in your `slalmohemed@gmail.com` inbox for "Your UC verification code".
+4. If no email comes, tell me and I'll check the org for a new Verification Code record.
+
+**Still open:** the rest of T1–T8, saving them as a Testing Ce
+
+_[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
