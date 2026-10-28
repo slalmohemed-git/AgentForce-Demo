@@ -50,16 +50,16 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Router instructions fixed & validated. Bundle ready for publish approval; v2 activation & testing next.
+**Status:** on track — Router fix validated & ready to commit. Publish approval pending for v2 creation in lal-devedition.
 
 **Done this session**
-- Updated UC_Assist.agent router instructions to always hand off, never invent status claims
-- Validated bundle against lal-devedition — passes
+- Validated router fix bundle against lal-devedition — passes
 
 **Open items**
 - Approve publish: create version 2 of UC_Assist in lal-devedition
 - Activate version 2 in lal-devedition
 - Commit router fix to develop (updates PR #1)
+- Push committed changes to GitHub
 - Run T6 in Preview with slalmohemed+maria@gmail.com after v2 active
 - Run T1–T8 sequence and save as test set
 - Review and merge PR #1
@@ -79,13 +79,12 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 
 **Next**
 - Approve publish to create version 2 in lal-devedition
+- Commit router fix to develop
+- Push to GitHub
 - Approve activation of version 2
-- Commit router changes to develop
 - Run T6 in Preview: verify code arrives for slalmohemed+maria@gmail.com
-- Run T1–T8 sequence and save as test set
-- Merge PR #1 to main
 
-**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
+**Checked live on 2026-10-28:** the repository
 ### Last session — 2026-10-28
 | | |
 |---|---|
@@ -95,7 +94,15 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I've changed the router's instructions. Now it must always hand the customer to a subagent, never answer on its own, never ask for an email or a code, and never say a code was sent or a reset has started. The bundle passes validation against `lal-devedition`. Nothing is committed yet.
+━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
+• Code committed: no new commit in this session run — if an earlier run committed, check the repository
+• Pushed to GitHub: nothing new pushed in this session run — if an earlier run pushed, check the repository
+• Validated (sf deploy validate): NOT verified
+• Deployed to org: NO — not deployed to any org
+Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-There's an Approve card for the publish. It creates version 2 of `UC_Assist` in `lal-devedition`. Version 1 stays active until you approve a separate activation step.
+I've put the router fix back on a fresh copy of `develop`, and it passes validation against `lal-devedition`. The fix makes the router hand every message to a subagent straight away. It can't reply itself, ask for an email or a code, or say a code was sent or a reset has started.
+
+There's an Approve card for the publish. Approving it creates version 2 of `UC_Assist` in `lal-devedition`, and version 1 stays active until you approve activating version 2 separately. The fix isn't committed yet. I'll push it to `develop` after the publish so it can't get lost again.
 <!-- orchestrate:session-state:end -->
