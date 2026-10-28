@@ -42,16 +42,15 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Step 4 ready: publish command validated, awaiting approval to execute UC_Assist agent publish
+**Status:** on track — Permission set assigned to admin user. Ready to approve UC_Assist publish command.
 
 **Done this session**
-- Confirmed Agent Platform Builder permission set exists in org
-- Identified permission set not yet assigned to admin user
+- Approved and executed permission set assignment for admin user to Agent Platform Builder
+- Verified assignment succeeded in org (assignment Id 0Paak00001BWl3NCAT)
 
 **Open items**
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Confirm address shows as Verified in Setup → Organization-Wide Addresses
-- Approve permission set assignment for admin user to Agent Platform Builder
 - Approve and execute publish UC_Assist authoring bundle to lal-devedition (creates version 1)
 - Approve and execute activate version 1 in lal-devedition
 - Verify agent and active version exist in org after activation
@@ -72,10 +71,9 @@
 - None
 
 **Next**
-- Approve permission set assignment for admin user
-- Verify assignment succeeded in org
 - Approve publish UC_Assist authoring bundle command
-- After publish succeeds, approve activate version 1 command
+- After publish succeeds, verify version 1 created in org
+- Approve activate version 1 command
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -87,5 +85,9 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I've checked that the Agent Platform Builder permission set (`0PSak00000fhscuGAA`) exists in the org and isn't assigned to your admin user (`005ak00000mAmvmAAC`) yet. The command waiting for your Approve click creates that one assignment. After you approve it, I'll check that it took and then ask you to approve the same UC_Assist publish again.
+I ran the command once, unchanged, and it worked. I read the assignment back from `lal-devedition`: Agent Platform Builder is now assigned to Lal Mohemed Shaik (assignment Id `0Paak00001BWl3NCAT`).
+
+Nothing has been published yet. An Approve card is waiting for the same publish command that failed before. It publishes the `UC_Assist` authoring bundle to `lal-devedition`, which creates version 1 of the agent. After you approve it, I'll check the result and then ask you to approve activating version 1.
+
+Sources: checked live: `lal-devedition` (PermissionSetAssignment query) · not checked: whether the publish now works
 <!-- orchestrate:session-state:end -->
