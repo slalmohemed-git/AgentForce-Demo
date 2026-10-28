@@ -50,19 +50,19 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — BUILD completed; code committed & pushed. Awaiting email verification, test runs T1–T8, and PR #1 review before Deploy.
+**Status:** on track — BUILD completed. Two test customers confirmed in lal-devedition. Ready to run T6 once sender address verified.
 
 **Done this session**
-- Confirmed UC_Assist v1 is Active in lal-devedition and responds in Preview panel
-- Clarified that Builder's assistant replies are separate from UC_Assist agent behavior
-- Provided test procedure: T6 (password reset) → T1 (identity verification) with email code flow
+- Confirmed two test customers (Maria Lopez, Ken Ito) exist in lal-devedition with correct emails and portal login states
+- Clarified real test email addresses: slalmohemed+maria@gmail.com and slalmohemed+ken@gmail.com route to slalmohemed@gmail.com inbox
 
 **Open items**
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Verify sender address shows Verified in Setup → Organization-Wide Addresses
+- Run test T6 in Preview panel: type 'I forgot my password', enter slalmohemed+maria@gmail.com, verify code arrives and UC_Assist routes to T1
 - Run tests T1–T8 in Agentforce Builder Preview panel and save as Testing Center test set
-- Add two permission sets (assigned by hand) to agent's permission set group in repo
-- Review and merge PR #1 (retitle & update description if needed)
+- Add two permission sets to agent's permission set group in repo
+- Review and merge PR #1
 - Confirm whether to keep test-data setup scripts in commit or remove them
 
 **Decisions**
@@ -71,16 +71,18 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
 - Test UC_Assist in Preview panel (not in the editing assistant chat)
+- Use test customer emails: Maria (slalmohemed+maria@gmail.com), Ken (slalmohemed+ken@gmail.com), stranger (stranger@example.com)
 
 **Blockers**
 - None
 
 **Next**
-- Click email verification link and confirm sender address Verified status
-- Run test T6 in Preview panel: type 'I forgot my password' and report UC_Assist's reply
-- If T6 routes correctly, run T1–T8 and save as test set
-- Review PR #1, retitle if needed, merge to main
-- Schedule Deploy session to ship to production
+- Click email verification link for sender address in slalmohemed@gmail.com inbox
+- Confirm sender address Verified status in Setup → Organization-Wide Addresses
+- Run T6 in Preview panel: type 'I forgot my password', provide slalmohemed+maria@gmail.com, enter 6-digit code from inbox
+- If T6 routes to T1 correctly, run T1–T8 sequence and save as test set
+- Review PR #1 and merge to main
+- Schedule Deploy session
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -92,18 +94,17 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-That reply came from Agentforce Builder's own built-in assistant, not from UC Assist, so this doesn't show a problem with the agent. The wording "editing your agent and answering questions about your agent and the Agentforce development platform" is how the Builder's helper describes its own job. I searched the `UC_Assist` script in the repo and that text isn't anywhere in it.
+Yes, the exercise created two test customers. I checked them in `lal-devedition` just now. You don't log in as either of them to test. In the Preview panel you act as the customer and type that customer's email when UC Assist asks for it.
 
-**To test UC Assist itself:**
-1. In Setup, go to **Agentforce Agents**, then **UC Assist**, and open it in Builder.
-2. Check you're looking at **version 1**, the active one.
-3. Open the **Preview** (conversation test) panel. Don't type into the assistant chat you used just now, which is for editing the agent.
-4. Type `I forgot my password` there.
+**I need to correct my last message.** I told you to type `you+maria@gmail.com`, but that was only the spec's placeholder. The real email on file is `slalmohemed+maria@gmail.com`. If you type the placeholder, the agent gives the same neutral "if that email is on file" reply but sends no code, which is what test T3 checks for.
 
-**What should happen:** this is test T6 from the spec, where a customer asks for a reset straight away. UC Assist should send you to identity verification first by asking for the email you use for the UC Portal. If you then give `you+maria@gmail.com`, it should reply "If that email is on file, a 6-digit code has been sent…", which starts T1.
+| Customer | Email to type in Preview | Portal login | Use it for |
+|---|---|---|---|
+| **Maria Lopez** | `slalmohemed+maria@gmail.com` | `maria.lopez.ucportal@example.com`, **Active** | T1 (happy path), T2 (three wrong codes), T4 (jailbreak), T6 (direct ask), T7 (stale session) |
+| **Ken Ito** | `slalmohemed+ken@gmail.com` | `ken.ito.ucportal@example.com`, **Inactive** on purpose | T5: the reset should fail with no active login and hand you to a person |
+| *(no record)* | `stranger@example.com` | — | T3: unknown email, same neutral reply, no code sent |
 
-**Before you run T1:**
-- The sender address still isn't verified, so the code email may not arrive yet. Click the verificati
+**How the emails reach you:** both plus-addresses deliver to your own
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
