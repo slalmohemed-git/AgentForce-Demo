@@ -42,19 +42,19 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Permission set assigned ✓; UC_Assist publish awaiting approval to create version 1
+**Status:** on track — Permission set assigned ✓; awaiting approval to publish UC_Assist bundle and create version 1
 
 **Done this session**
-- Executed permission set assignment command for UC Assist Agent user
-- Verified assignment succeeded in org (ID 0Paak00001BWFTRCA5)
+- None
 
 **Open items**
 - Approve and execute publish UC_Assist authoring bundle command
-- Verify version 1 created in org after publish succeeds
+- Verify version 1 created in lal-devedition after publish succeeds
 - Approve and execute activate version 1 in lal-devedition
 - Run tests T1–T8 and confirm all pass
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Confirm address shows as Verified in Setup → Organization-Wide Addresses
+- Commit restored test-data scripts and handoff to develop, push, open PR to main
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
@@ -70,8 +70,8 @@
 - None
 
 **Next**
-- Approve and execute publish UC_Assist authoring bundle command
-- Verify version 1 created in lal-devedition after publish
+- Approve publish UC_Assist authoring bundle command
+- Verify version 1 created in lal-devedition
 - Approve activate version 1 command
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
@@ -84,9 +84,7 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I ran the command once, unchanged, and it worked. I read it back from `lal-devedition`: the UC Assist Agent user now has the Agentforce Service Agent User permission set (assignment Id `0Paak00001BWFTRCA5`). It also still has its two earlier sets, UC Assist Agent and its profile permission set.
+An Approve card is waiting for the `UC_Assist` publish. It publishes the authoring bundle to `lal-devedition` and creates version 1 of the agent. The two permission sets that were missing are now assigned, so this is the retry after that fix.
 
-There's an Approve card waiting for the same `UC_Assist` publish command. If you approve it, it publishes the authoring bundle to `lal-devedition` and creates version 1 of the agent. I'll check the result and then ask you to approve activating it.
-
-Sources: checked live: `lal-devedition` (PermissionSetAssignment query) · not checked: whether the publish now works
+Once you approve it, I'll check the result and ask you to approve activating version 1. After that I'll commit the restored test-data scripts and the handoff to `develop`, push, and open the PR to `main`.
 <!-- orchestrate:session-state:end -->
