@@ -50,17 +50,16 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Router fix v3 ready to publish; PR #1 validated and pushed. Next: approve publish, activate v3, rerun T6.
+**Status:** on track — Router fix v3 published to lal-devedition; awaiting activation approval to test handoff
 
 **Done this session**
-- Fixed Password Reset to always hand off unverified customers to Identity Verification
-- Validated fix (commit 7cd0587) and pushed to develop branch
-- Added fix to PR #1
+- Published UC_Assist version 3 (commit 7cd0587 with Password Reset fix) to lal-devedition
+- Verified version 3 exists in org but inactive; version 2 remains live
 
 **Open items**
-- Approve publishing fix as UC_Assist version 3 in lal-devedition
-- Approve activating version 3 (after publish approval)
-- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com to verify handoff now works
+- Approve activating version 3 of UC_Assist in lal-devedition
+- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com to verify handoff works
+- Check slalmohemed@gmail.com inbox for verification code email after T6
 - Complete remaining T1–T8 tests and save as test set in Testing Center
 - Review and merge PR #1 to main
 - Decide: keep or remove test-data setup scripts from commit
@@ -80,15 +79,15 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 - None
 
 **Next**
-- Approve publishing fix as version 3 of UC_Assist in lal-devedition
-- Approve activating version 3
+- Approve activating version 3 of UC_Assist
+- Verify version 3 shows as Active in org after activation
 - Rerun T6 in Preview with slalmohemed+maria@gmail.com; type 'I forgot my password' and verify handoff to Identity Verification
 - Check slalmohemed@gmail.com inbox for verification code email
 - Complete remaining T1–T8 tests
 - Review PR #1 and merge to main
 - Schedule Deploy session for production ship
 
-**Checked live on 2026-10-28:** the repository
+**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
 | | |
 |---|---|
@@ -98,15 +97,15 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: yes (branch develop)
-• Pushed to GitHub: yes
-• Validated (sf deploy validate): NOT verified
-• Deployed to org: no deploy in this session run — if an earlier run deployed, verify in the target org
-Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+I ran the publish command once, exactly as approved, and it succeeded. It reported 1 component retrieved and 3 deployed. I checked the org afterwards, and version 3 of `UC_Assist` now exists but isn't live yet. It's built from commit `7cd0587` on `develop`, which has the Password Reset fix.
 
-I've fixed Password Reset so a customer who isn't verified is always sent straight to Identity Verification. In your T6 run it said it would start verification, then stopped without handing over, so no code was ever sent. The fix is validated and pushed to `develop` (commit `7cd0587`, which adds to PR #1).
+| Version | Status | Created (UTC) |
+|---|---|---|
+| 1 | Inactive | 15:44 |
+| 2 | **Active** | 17:32 |
+| 3 | Inactive | 18:06 |
 
-There's an Approve card for publishing the fix as version 3 of `UC_Assist` in `lal-devedition`. Version 2 stays live until you also approve activating version 3, which comes next.
+You'll see an Approve card for `sf agent activate --api-name UC_Assist --version 3`. Approving it switches the live agent to version 3. After that I'll check it shows as Active, and you can rerun T6 in the Preview panel using `slalmohemed+maria@gmail.com`.
+
+Sources: checked live: `lal-devedition` (BotVersion query after the publish), the `repo2` checkout (commit `7cd0587`, fix present) · not checked: how version 3 behaves, since it isn't active yet
 <!-- orchestrate:session-state:end -->
