@@ -50,37 +50,39 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — UC_Assist v1 Active in lal-devedition. Code committed & pushed. PR #1 ready for review. Awaiting email verification & test runs.
+**Status:** on track — BUILD completed; code committed & pushed. Awaiting email verification, test runs T1–T8, and PR #1 review before Deploy.
 
 **Done this session**
-- Code committed to develop (6 files: handoff.md, gotchas.md, bundle meta, 3 test-data scripts)
-- Pushed to GitHub (develop → 954172f, rebased onto 25 auto-commits)
-- Verified UC_Assist version 1 is Active in lal-devedition
+- Confirmed UC_Assist v1 is Active in lal-devedition and responds in Preview panel
+- Clarified that Builder's assistant replies are separate from UC_Assist agent behavior
+- Provided test procedure: T6 (password reset) → T1 (identity verification) with email code flow
 
 **Open items**
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Verify sender address shows Verified in Setup → Organization-Wide Addresses
-- Run tests T1–T8 in Agentforce Builder test panel and save as Testing Center test set
+- Run tests T1–T8 in Agentforce Builder Preview panel and save as Testing Center test set
 - Add two permission sets (assigned by hand) to agent's permission set group in repo
 - Review and merge PR #1 (retitle & update description if needed)
+- Confirm whether to keep test-data setup scripts in commit or remove them
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Include test-data setup scripts in commit (confirm or remove in follow-up)
+- Test UC_Assist in Preview panel (not in the editing assistant chat)
 
 **Blockers**
 - None
 
 **Next**
 - Click email verification link and confirm sender address Verified status
-- Run tests T1–T8 and save as test set
+- Run test T6 in Preview panel: type 'I forgot my password' and report UC_Assist's reply
+- If T6 routes correctly, run T1–T8 and save as test set
 - Review PR #1, retitle if needed, merge to main
 - Schedule Deploy session to ship to production
 
-**Checked live on 2026-10-28:** the repository
+**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
 | | |
 |---|---|
@@ -90,21 +92,18 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: yes (branch develop)
-• Pushed to GitHub: yes
-• Validated (sf deploy validate): NOT verified
-• Deployed to org: no deploy in this session run — if an earlier run deployed, verify in the target org
-Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+That reply came from Agentforce Builder's own built-in assistant, not from UC Assist, so this doesn't show a problem with the agent. The wording "editing your agent and answering questions about your agent and the Agentforce development platform" is how the Builder's helper describes its own job. I searched the `UC_Assist` script in the repo and that text isn't anywhere in it.
 
-The commit is on GitHub: `develop` now points to `954172f`.
+**To test UC Assist itself:**
+1. In Setup, go to **Agentforce Agents**, then **UC Assist**, and open it in Builder.
+2. Check you're looking at **version 1**, the active one.
+3. Open the **Preview** (conversation test) panel. Don't type into the assistant chat you used just now, which is for editing the agent.
+4. Type `I forgot my password` there.
 
-**What was pushed.** The push was rejected at first because GitHub's `develop` had 25 newer automatic commits that only touch `handoff.md`. I rebased onto them and it went through with no conflicts. The commit changes 6 files:
-- `context/handoff.md`: where things stand, what's in progress, next steps, and what we're waiting on.
-- `context/gotchas.md`: why publish failed with HTTP 401 and the two permission sets that fixed it.
-- The `UC_Assist` bundle meta file: a trailing newline.
-- The three test-data setup scripts in `scripts/apex/`. These weren't in the list of files you confirmed, but they are the scripts I said earlier I'd commit. Tell me if you'd rather the
+**What should happen:** this is test T6 from the spec, where a customer asks for a reset straight away. UC Assist should send you to identity verification first by asking for the email you use for the UC Portal. If you then give `you+maria@gmail.com`, it should reply "If that email is on file, a 6-digit code has been sent…", which starts T1.
+
+**Before you run T1:**
+- The sender address still isn't verified, so the code email may not arrive yet. Click the verificati
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
