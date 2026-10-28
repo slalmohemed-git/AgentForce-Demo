@@ -42,18 +42,21 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Step 3 complete; awaiting verification click. Step 4 publish/activate plan ready for review.
+**Status:** on track — Step 4 ready: publish command validated, awaiting approval to execute UC_Assist agent publish
 
 **Done this session**
-- None
+- Ran read-only safety check for publish and activate commands
+- Confirmed develop branch and command options (--api-name, --target-org, --version)
+- Identified scripts/ folder not yet committed — will include in step 6 handoff
 
 **Open items**
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Confirm address shows as Verified in Setup → Organization-Wide Addresses
-- Review and approve exact publish and activate plan for step 4
-- Publish and activate UC Assist agent
+- Approve and execute publish UC_Assist authoring bundle to lal-devedition (creates version 1)
+- Approve and execute activate version 1 in lal-devedition
+- Verify agent and active version exist in org after activation
 - Run tests T1–T8 and confirm all pass
-- Update handoff notes and open PR from develop to main
+- Commit scripts/ folder with handoff notes and open PR from develop to main
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
@@ -69,9 +72,9 @@
 - None
 
 **Next**
-- Click verification link in slalmohemed@gmail.com inbox
-- Confirm sender address verified in Setup → Organization-Wide Addresses
-- Reply 'continue' to proceed with step 4 publish and activate plan review
+- Approve publish UC_Assist authoring bundle command
+- After publish succeeds, approve activate version 1 command
+- Verify agent and active version in lal-devedition org
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -83,5 +86,7 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-Nothing has changed in the org. The safety check held a read-only command again. It only checks which branch I'm on and prints the option lists for `sf agent publish authoring-bundle` and `sf agent activate`, so I use the right options for the real publish. After you approve it, I'll run the publish and then the activation. Each of those will show its own Approve card, and I'll check the agent and its active version in `lal-devedition` afterwards.
+I ran the read-only check once, unchanged. It confirmed you're on `develop`. It also showed the options for the two commands: publish takes `--api-name` and `--target-org`, and activate takes `--api-name`, `--target-org` and an optional `--version`. One thing it found: the `scripts/` folder with the three test-data setup scripts isn't committed yet. I'll commit it with the handoff in step 6.
+
+An Approve card is now waiting for the real publish. It publishes the `UC_Assist` authoring bundle to `lal-devedition`, which creates version 1 of the agent. Once you approve, I'll check the result, ask for approval to activate version 1, and then confirm in the org that the agent and its active version exist.
 <!-- orchestrate:session-state:end -->
