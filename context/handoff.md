@@ -3,32 +3,38 @@
 > **Rewritten at the end of every session.** This file is *now*; [`gotchas.md`](gotchas.md) is *forever*.
 > If this file and [`../CONTEXT.md`](../CONTEXT.md) disagree, this one is newer.
 
-**Last updated:** 2026-10-27 · **By:** <session or person>
+**Last updated:** 2026-10-28 · **By:** Orchestrate build session (Demo-AgentBuild-UseCase-1)
 
 ---
 
 ## Where things stand
 
-> **Not yet filled in.** — Where is the work right now, in two or three sentences? Someone picking
-> this up cold reads this first.
+The UC Assist password-reset build (43 components) is deployed to `lal-devedition`. The `UC_Assist`
+Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak000007eFPJCA2`, checked
+2026-10-28). The end-to-end tests T1–T8 have not been run yet, and the outgoing sender address still needs verifying.
 
 ## In progress
 
 | What | State | Where it lives | Blocked on |
 |---|---|---|---|
-| | | | |
+| Tests T1–T8 (spec test scripts) | Not run | Agentforce Builder test panel | Nothing |
+| Org-wide sender address | Verification email sent, not clicked | Setup → Organization-Wide Addresses | Lal clicking the link |
+| PR develop → main | Open | GitHub | Review |
 
 ## Next steps
 
 <!-- Ordered. The top item should be the one to do next, not the most interesting one. -->
 
-1.
+1. Click the verification link sent to slalmohemed@gmail.com, then confirm the address shows Verified.
+2. Run T1–T8 in the Agentforce Builder test panel and check the plan tracer each turn.
+3. Save T1–T8 as an Agentforce Testing Center test set.
+4. Review and merge the PR from `develop` to `main`.
 
 ## Waiting on someone else
 
 | What | Who | Since | Chased? |
 |---|---|---|---|
-| | | | |
+| Sender address verification | Lal Shaik | 2026-10-28 | No |
 
 ## Things the next session should know
 
@@ -36,47 +42,45 @@
      deliberately disabled test, a workaround that needs removing, a deploy that is half-applied.
      If you leave something in a strange state, this is where you say so. -->
 
--
+- Two permission sets were assigned by hand in the org to make publish work (see gotchas.md). They are
+  not in the repo's permission set group yet, so a fresh org setup needs them assigned again.
+- Test data (users, customers, portal users) is created by the scripts in `scripts/apex/`, run in order 01 → 03.
 
 <!-- orchestrate:session-state:start -->
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — UC_Assist published, version 1 created (0X9ak000007eFPJCA2). Awaiting approval to activate.
+**Status:** on track — UC_Assist v1 Active in lal-devedition. Code committed & pushed. PR #1 ready for review. Awaiting email verification & test runs.
 
 **Done this session**
-- Publish UC_Assist authoring bundle command executed successfully
-- Version 1 created in lal-devedition (0X9ak000007eFPJCA2) at 15:45 UTC
-- Agent 0Xxak000004Sp0TCAS confirmed in org
+- Code committed to develop (6 files: handoff.md, gotchas.md, bundle meta, 3 test-data scripts)
+- Pushed to GitHub (develop → 954172f, rebased onto 25 auto-commits)
+- Verified UC_Assist version 1 is Active in lal-devedition
 
 **Open items**
-- Approve and execute activate version 1 (sf agent activate --api-name UC_Assist --version 1)
-- Verify version 1 shows Active in lal-devedition after activation
-- Run tests T1–T8 and confirm all pass
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
-- Confirm address shows as Verified in Setup → Organization-Wide Addresses
-- Commit restored test-data scripts and handoff to develop, push, open PR to main
+- Verify sender address shows Verified in Setup → Organization-Wide Addresses
+- Run tests T1–T8 in Agentforce Builder test panel and save as Testing Center test set
+- Add two permission sets (assigned by hand) to agent's permission set group in repo
+- Review and merge PR #1 (retitle & update description if needed)
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Deploy from develop branch (commit 0eb8642 + context-only commits)
-- Split deploy: Deploy A then Deploy B (18 components, deployed)
-- Deploy UC Portal Customer profile separately before Deploy B
-- Use quick-deploy for validated job instead of retrying safety check
+- Include test-data setup scripts in commit (confirm or remove in follow-up)
 
 **Blockers**
 - None
 
 **Next**
-- Approve sf agent activate --api-name UC_Assist --version 1 command
-- Verify version 1 shows Active in lal-devedition
-- Run tests T1–T8
-- Activate sender address and verify in Setup
+- Click email verification link and confirm sender address Verified status
+- Run tests T1–T8 and save as test set
+- Review PR #1, retitle if needed, merge to main
+- Schedule Deploy session to ship to production
 
-**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
+**Checked live on 2026-10-28:** the repository
 ### Last session — 2026-10-28
 | | |
 |---|---|
@@ -86,9 +90,21 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-The `UC_Assist` publish worked this time. The command ran once, unchanged. In `lal-devedition`, the agent is there (`0Xxak000004Sp0TCAS`) and version 1 was created at 15:45 UTC (`0X9ak000007eFPJCA2`). It's still Inactive.
+━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
+• Code committed: yes (branch develop)
+• Pushed to GitHub: yes
+• Validated (sf deploy validate): NOT verified
+• Deployed to org: no deploy in this session run — if an earlier run deployed, verify in the target org
+Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-You chose "Publish and activate", so an Approve card is now waiting for `sf agent activate --api-name UC_Assist --version 1`. That puts version 1 live. Once you approve it, I'll check in the org that the version shows Active. Then I'll commit the restored test-data scripts and the handoff to `develop`, push, and open the PR to `main`.
+The commit is on GitHub: `develop` now points to `954172f`.
 
-Sources: checked live: `lal-devedition` (BotDefinition and BotVersion queries) · not checked: activation, which hasn't run yet
+**What was pushed.** The push was rejected at first because GitHub's `develop` had 25 newer automatic commits that only touch `handoff.md`. I rebased onto them and it went through with no conflicts. The commit changes 6 files:
+- `context/handoff.md`: where things stand, what's in progress, next steps, and what we're waiting on.
+- `context/gotchas.md`: why publish failed with HTTP 401 and the two permission sets that fixed it.
+- The `UC_Assist` bundle meta file: a trailing newline.
+- The three test-data setup scripts in `scripts/apex/`. These weren't in the list of files you confirmed, but they are the scripts I said earlier I'd commit. Tell me if you'd rather the
+
+_[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
