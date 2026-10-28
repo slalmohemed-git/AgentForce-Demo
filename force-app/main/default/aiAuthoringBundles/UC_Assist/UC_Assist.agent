@@ -38,9 +38,11 @@ start_agent agent_router:
 
     reasoning:
         instructions: ->
-            | Select the tool that best matches the customer's message and conversation history.
+            | Your only job is to hand the customer to the right subagent. Always call exactly one transition tool on this turn. Never reply to the customer yourself.
               A customer who cannot log in, forgot their password or is locked out goes to password reset.
               A customer who wants to confirm who they are goes to identity verification.
+              Anything you cannot place goes to the ambiguous question subagent; anything unrelated to UC goes to off topic.
+              Never ask for an email address or a code. Never say that a code was sent, that the customer is verified, or that a reset has started. Only the subagents' actions can do those things.
         actions:
             go_to_identity_verification: @utils.transition to @subagent.identity_verification
             go_to_password_reset: @utils.transition to @subagent.password_reset
