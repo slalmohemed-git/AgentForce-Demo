@@ -42,10 +42,10 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Step 3 complete; org-wide sender awaits verification click. Step 4 (publish UC Assist agent) ready to plan.
+**Status:** on track — Step 3 complete; awaiting verification click. Step 4 publish/activate plan ready for review.
 
 **Done this session**
-- Read sf agent publish and sf agent activate help text; safety check blocked execution as expected
+- None
 
 **Open items**
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
@@ -83,5 +83,5 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-That command only reads the UC Assist agent script and prints the help text for the `sf agent publish` and `sf agent activate` commands. It doesn't publish, activate or change anything in `lal-devedition`. The safety check held it, probably because the word "publish" appears in it. Once you approve it, I'll read the output and then show you the exact publish and activate plan for step 4, and ask you before anything changes in the org.
+Nothing has changed in the org. The safety check held a read-only command again. It only checks which branch I'm on and prints the option lists for `sf agent publish authoring-bundle` and `sf agent activate`, so I use the right options for the real publish. After you approve it, I'll run the publish and then the activation. Each of those will show its own Approve card, and I'll check the agent and its active version in `lal-devedition` afterwards.
 <!-- orchestrate:session-state:end -->
