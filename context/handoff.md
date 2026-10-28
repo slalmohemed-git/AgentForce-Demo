@@ -42,16 +42,16 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Script 01 done: agent user + Account Owner role live. Script 02 awaiting approval.
+**Status:** on track — Script 02 done: Lopez Freight & Ito Logistics accounts + contacts live. Script 03 awaiting approval.
 
 **Done this session**
-- Script 01 executed: UC Assist Agent user created (005ak00000mI9ijAAC), UC_Assist_Agent permission set assigned, admin user given UC Account Owner role
+- Script 02 executed: Lopez Freight and Ito Logistics accounts created with Maria Lopez and Ken Ito contacts
+- Verified accounts and contacts in lal-devedition org
 
 **Open items**
-- Approve script 02 (Lopez Freight and Ito Logistics accounts + contacts)
-- Run script 02 and verify accounts and contacts in org
-- Approve and run script 03 (portal users Maria and Ken)
-- Approve and set up org-wide sender address
+- Approve script 03 (portal users Maria and Ken)
+- Run script 03 and verify portal users in org
+- Approve and set up org-wide sender address (UC Support)
 - Publish and activate UC Assist agent
 - Run tests T1–T8 and confirm all pass
 - Update handoff notes and open PR from develop to main
@@ -62,7 +62,7 @@
 - Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
 - Deploy from develop branch (commit 0eb8642 + context-only commits)
-- Split deploy: Deploy A then Deploy B (18 components, now deployed)
+- Split deploy: Deploy A then Deploy B (18 components, deployed)
 - Deploy UC Portal Customer profile separately before Deploy B
 - Use quick-deploy for validated job instead of retrying safety check
 
@@ -70,10 +70,11 @@
 - None
 
 **Next**
-- Approve script 02 (accounts and contacts)
-- Run script 02 and verify Lopez Freight and Ito Logistics accounts with contacts in org
-- Approve script 03 (portal users)
-- Run script 03 and verify Maria and Ken as portal users
+- Approve script 03 (portal users Maria active, Ken deactivated)
+- Run script 03 and verify both portal users on UC Portal Customer profile in org
+- Set up and approve org-wide sender address (UC Support)
+- Publish and activate UC Assist agent
+- Run tests T1–T8
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -85,14 +86,12 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-Script 01 ran once, unchanged, and worked. I checked the results in `lal-devedition`:
-- **Agent user:** "UC Assist Agent" (`ucassist.agent.e68b5eeb6b@example.com`, Id `005ak00000mI9ijAAC`) is created and active, on the Einstein Agent User profile with the Einstein Agent licence.
-- **Permission set group:** `UC_Assist_Agent` is assigned to the agent user.
-- **Your admin user:** now has the UC Account Owner role.
+Script 02 ran once, unchanged, and worked. I checked `lal-devedition` afterwards and both customers are there:
+- **Lopez Freight** (1 account), with contact **Maria Lopez** (slalmohemed+maria@gmail.com, `003ak00002K5ZJxAAN`).
+- **Ito Logistics** (1 account), with contact **Ken Ito** (slalmohemed+ken@gmail.com, `003ak00002K5ZJyAAN`).
+- Your admin user owns both accounts and has the UC Account Owner role. Customer portal users need their account's owner to have a role, so script 03 can create them.
 
-The agent user has no role. Einstein Agent users don't need one, so that's fine.
+Script 03 hasn't run yet and is waiting for your Approve click. It creates the portal users on the UC Portal Customer profile without sending welcome emails. Maria stays active and Ken is deactivated, which test T5 needs. This uses 2 of your 5 Customer Community licences. Once you approve, I'll check both users and then add the "UC Support" org-wide address.
 
-An Approve card is now waiting for script 02. It creates the Lopez Freight and Ito Logistics accounts, with Maria Lopez (slalmohemed+maria@gmail.com) and Ken Ito (slalmohemed+ken@gmail.com) as their contacts. Once you approve, I'll check them in the org and go on to script 03, the portal users.
-
-Sources: checked live: `lal-devedition` (script result, user, permission set assignment and role queries) · not checked: nothing else
+Sources: checked live: `lal-devedition` (script result, Contact and Account queries) · not checked: nothing else
 <!-- orchestrate:session-state:end -->
