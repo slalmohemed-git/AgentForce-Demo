@@ -50,22 +50,19 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Router fix committed & pushed to GitHub (PR #1). Version 2 created in lal-devedition, awaiting activation.
+**Status:** on track — Router fix live in lal-devedition v2 (Active). Next: rerun T6 in Preview to verify handoff behavior.
 
 **Done this session**
-- Committed router fix to develop (commit 59d54fe, +3/-1 lines in UC_Assist.agent)
-- Pushed to GitHub — PR #1 now includes the fix
-- Rebased onto 6 newer handoff.md commits with no conflicts
-- Confirmed version 2 of UC_Assist created in lal-devedition at 17:32 UTC
+- Activated version 2 of UC_Assist in lal-devedition (command succeeded)
+- Confirmed version 2 now Active, version 1 Inactive as of 17:56 UTC
+- Fixed router (commit 59d54fe) is now live to customers
 
 **Open items**
-- Approve activation: switch lal-devedition live agent from version 1 to version 2
-- Verify version 2 shows Active after approval
-- Run T6 in Preview with slalmohemed+maria@gmail.com to verify fixed router
-- Run T1–T8 sequence and save as test set
+- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com to verify handoff works
+- Complete T1–T8 sequence and save as test set in Testing Center
 - Review and merge PR #1 to main
-- Run Deploy session to ship to production
 - Decide: keep or remove test-data setup scripts from commit
+- Schedule Deploy session to ship to production
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
@@ -81,13 +78,14 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 - None
 
 **Next**
-- Approve activation of version 2 in lal-devedition
-- Verify version 2 becomes Active
-- Run T6 in Preview panel with slalmohemed+maria@gmail.com
+- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com; type 'I forgot my password' and verify handoff to Identity Verification or Password Reset
+- Check slalmohemed@gmail.com inbox for verification code email
+- If email fails, check org for new Verification Code record
+- Complete remaining T1–T8 tests
 - Review PR #1 and merge to main
-- Schedule Deploy session to ship to production
+- Schedule Deploy session for production ship
 
-**Checked live on 2026-10-28:** the repository
+**Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
 | | |
 |---|---|
@@ -97,19 +95,22 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
-• Code committed: yes (branch develop)
-• Pushed to GitHub: yes
-• Validated (sf deploy validate): NOT verified
-• Deployed to org: no deploy in this session run — if an earlier run deployed, verify in the target org
-Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+I ran the command once, exactly as approved, and version 2 of `UC_Assist` is now the live agent in `lal-devedition`. The command returned `success: true` for version 2. I then checked the org, and both versions changed at 17:56 UTC:
 
-The router fix is on GitHub. `develop` now points to commit `59d54fe`, which changes only `UC_Assist.agent` (+3/-1 lines), and PR #1 includes it. Before pushing I rebased onto 6 newer automatic commits that only touch `handoff.md`, and there were no conflicts.
+| Version | Status | Id |
+|---|---|---|
+| 1 | Inactive | `0X9ak000007eFPJCA2` |
+| 2 | **Active** | `0X9ak000007ePlFCAU` |
 
-In `lal-devedition`, version 2 (created 17:32 UTC) is still Inactive, and version 1 is still the Active one. There's an Approve card for `sf agent activate --api-name UC_Assist --version 2`. Approving it switches the live agent to the fixed router. Then I'll check it shows Active, and you can rerun T6 in the Preview panel with `slalmohemed+maria@gmail.com`.
+The fixed router (commit `59d54fe` on `develop`, part of PR #1) is now what customers reach.
 
-Sources: checked live: GitHub (remote `develop` tip `59d54fe`), `lal-devedition` (BotVersion query) · not che
+**Next: rerun T6 to check the fix**
+1. Open UC Assist in Agentforce Builder, check you're on version 2, and use the **Preview** panel (not the Builder's own assistant chat).
+2. Type `I forgot my password`. The plan tracer should show a handoff to Identity Verification or Password Reset, not the router replying itself.
+3. When it asks for your email, give `slalmohemed+maria@gmail.com`. Look in your `slalmohemed@gmail.com` inbox for "Your UC verification code". The sender address is now verified, so the email should arrive.
+4. If no email comes, tell me and I'll check the org for a new Verification Code record.
+
+**Still open:** the rest of T1–T8 and saving them as a Testing Center test set, merging PR #1, and deciding whether to keep the tes
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
