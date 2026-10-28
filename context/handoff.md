@@ -50,15 +50,17 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Router fix v3 activated live in lal-devedition; ready to test T6 handoff flow
+**Status:** on track — Router v3 live & tested; T6 handoff works but verification email blocked by Gmail SPF/DMARC
 
 **Done this session**
-- Activated UC_Assist version 3 as live agent in lal-devedition
-- Verified version 3 (commit 7cd0587) now Active; versions 1 & 2 Inactive
+- Confirmed Verification_Code record created (VC-00000) and Salesforce sendEmail succeeded
+- Diagnosed email delivery failure: Gmail rejecting mail from Salesforce servers claiming @gmail.com sender
 
 **Open items**
-- Rerun T6 in Preview panel with slalmohemed+maria@gmail.com; verify handoff to Identity Verification
-- Check slalmohemed@gmail.com inbox for verification code email after T6
+- Check Gmail Spam and All Mail for verification code email; search subject:'Your UC verification code'
+- If email not found, review Setup → Email Log Files for last hour to confirm Gmail rejection
+- Fix sender address: either clear Org_Wide_Email_Address__c or verify non-Gmail domain sender
+- Rerun T6 with fresh verification code (previous one expired 10 min after 18:52 UTC)
 - Complete remaining T1–T8 tests and save as test set in Testing Center
 - Review and merge PR #1 to main
 - Decide: keep or remove test-data setup scripts from commit
@@ -78,11 +80,11 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 - None
 
 **Next**
-- Rerun T6 in Preview with slalmohemed+maria@gmail.com; type 'I forgot my password' and verify handoff to Identity Verification
-- Check slalmohemed@gmail.com inbox for verification code email
-- Complete remaining T1–T8 tests
-- Review PR #1 and merge to main
-- Schedule Deploy session for production ship
+- Search Gmail Spam and All Mail for 'Your UC verification code' email
+- If not found, check Setup → Email Log Files for delivery status
+- Choose sender fix: (a) clear Org_Wide_Email_Address__c or (b) verify non-Gmail domain
+- Request new verification code and rerun T6 handoff test
+- Continue T1–T8 test suite
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -94,23 +96,18 @@ Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak0
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-I ran the command once, exactly as approved, and version 3 of `UC_Assist` is now the live agent in `lal-devedition`. The command returned `success: true` for version 3. I then checked the org, and versions 2 and 3 both changed at 18:30 UTC:
+The send worked on the Salesforce side. The problem is very likely how Gmail treats the email.
 
-| Version | Status | Id |
-|---|---|---|
-| 1 | Inactive | `0X9ak000007eFPJCA2` |
-| 2 | Inactive | `0X9ak000007ePlFCAU` |
-| 3 | **Active** | `0X9ak000007eRjpCAE` |
+**What I found in `lal-devedition`:**
+- Your test created a code record (`VC-00000`, 18:52 UTC) for Maria. This is the first one ever created, so the send action ran this time. The tracer in your screenshot agrees.
+- `Messaging.sendEmail` didn't fail. If it had, the code rolls everything back and that record wouldn't exist. So Salesforce accepted the email.
+- The email goes out with **From: `slalmohemed@gmail.com`** (the verified sender address) **to `slalmohemed+maria@gmail.com`**, which is the same Gmail inbox.
 
-Version 3 is built from commit `7cd0587` on `develop`, which is part of PR #1. It includes both fixes: the router now always hands off, and Password Reset now always sends an unverified customer to Identity Verification.
+**Why it probably isn't in your inbox:** Salesforce sends from its own mail servers, not Google's, while claiming to be from a `@gmail.com` address. Gmail's sender checks (SPF/DMARC) fail for that kind of email, so Gmail often sends it to Spam or rejects it without telling you. It's worse when the From and To addresses are the same mailbox. This is my best explanation, not something I've confirmed. I can't see Gmail or Salesforce's outbound mail log from here.
 
-**Next: rerun T6**
-1. Open UC Assist in Agentforce Builder and check you're on version 3. Use the **Preview** panel, not the Builder's own assistant chat.
-2. Type `I forgot my password`. In the plan tracer you should see the conversation go to Identity Verification, and it should ask for your email.
-3. Give `slalmohemed+maria@gmail.com`. Then look in your `slalmohemed@gmail.com` inbox for "Your UC verification code".
-4. If no email comes, tell me and I'll check the org for a new Verification Code record.
-
-**Still open:** the rest of T1–T8, saving them as a Testing Ce
+**Please check now:**
+1. In Gmail, search `subject:"Your UC verification code"` in **Spam** and **All Mail**.
+2. If it
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
