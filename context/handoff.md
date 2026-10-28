@@ -42,15 +42,16 @@
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-10-28
-**Status:** on track — Permission set assigned ✓; awaiting approval to publish UC_Assist bundle and create version 1
+**Status:** on track — UC_Assist published, version 1 created (0X9ak000007eFPJCA2). Awaiting approval to activate.
 
 **Done this session**
-- None
+- Publish UC_Assist authoring bundle command executed successfully
+- Version 1 created in lal-devedition (0X9ak000007eFPJCA2) at 15:45 UTC
+- Agent 0Xxak000004Sp0TCAS confirmed in org
 
 **Open items**
-- Approve and execute publish UC_Assist authoring bundle command
-- Verify version 1 created in lal-devedition after publish succeeds
-- Approve and execute activate version 1 in lal-devedition
+- Approve and execute activate version 1 (sf agent activate --api-name UC_Assist --version 1)
+- Verify version 1 shows Active in lal-devedition after activation
 - Run tests T1–T8 and confirm all pass
 - Click verification link in slalmohemed@gmail.com inbox to activate sender address
 - Confirm address shows as Verified in Setup → Organization-Wide Addresses
@@ -70,9 +71,10 @@
 - None
 
 **Next**
-- Approve publish UC_Assist authoring bundle command
-- Verify version 1 created in lal-devedition
-- Approve activate version 1 command
+- Approve sf agent activate --api-name UC_Assist --version 1 command
+- Verify version 1 shows Active in lal-devedition
+- Run tests T1–T8
+- Activate sender address and verify in Setup
 
 **Checked live on 2026-10-28:** nothing — the status above is as recorded, not re-checked
 ### Last session — 2026-10-28
@@ -84,7 +86,9 @@
 | Name | Demo-AgentBuild-UseCase-1 |
 | Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
 **In its own words (excerpt):**
-An Approve card is waiting for the `UC_Assist` publish. It publishes the authoring bundle to `lal-devedition` and creates version 1 of the agent. The two permission sets that were missing are now assigned, so this is the retry after that fix.
+The `UC_Assist` publish worked this time. The command ran once, unchanged. In `lal-devedition`, the agent is there (`0Xxak000004Sp0TCAS`) and version 1 was created at 15:45 UTC (`0X9ak000007eFPJCA2`). It's still Inactive.
 
-Once you approve it, I'll check the result and ask you to approve activating version 1. After that I'll commit the restored test-data scripts and the handoff to `develop`, push, and open the PR to `main`.
+You chose "Publish and activate", so an Approve card is now waiting for `sf agent activate --api-name UC_Assist --version 1`. That puts version 1 live. Once you approve it, I'll check in the org that the version shows Active. Then I'll commit the restored test-data scripts and the handoff to `develop`, push, and open the PR to `main`.
+
+Sources: checked live: `lal-devedition` (BotDefinition and BotVersion queries) · not checked: activation, which hasn't run yet
 <!-- orchestrate:session-state:end -->
