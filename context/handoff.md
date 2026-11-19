@@ -3,11 +3,46 @@
 > **Rewritten at the end of every session.** This file is *now*; [`gotchas.md`](gotchas.md) is *forever*.
 > If this file and [`../CONTEXT.md`](../CONTEXT.md) disagree, this one is newer.
 
-**Last updated:** 2026-11-19 · **By:** Orchestrate build session (POC-Antioch-Build-P2)
+**Last updated:** 2026-11-19 · **By:** Orchestrate build session (Poc-Antioch-Build-p3)
 
 ---
 
 ## Where things stand
+
+**POC Phase 3 (connected agents)** is done: GO, keep two agents. See
+[`decisions/2026-11-19-poc-phase3-connected-agent-go-no-go.md`](decisions/2026-11-19-poc-phase3-connected-agent-go-no-go.md).
+Read back in `lal-devedition` on 2026-11-19:
+
+- `POC_Knowledge_Agent_Stub`: Employee agent (InternalCopilot), no default user, **v1 Active**. Calls the Case
+  agent with `@connected_subagent.POC_Case_Agent_Stub` (supervisor mode).
+- `POC_Case_Agent_Stub`: Service agent (ExternalCopilot), runs as POC Agent `005ak00000oV1FxAAK`, no channel,
+  **v4 Active** (v1 to v3 Inactive: wording fixes to the submission ID step). Its only action is `flow://POC_Create_Case`.
+- Only the two `aiAuthoringBundles` are in the repo. The `bots/` and `genAiPlannerBundles/` files that publish
+  retrieves are org-specific and not committed.
+
+### Go / no-go answers (tested)
+
+| | |
+|---|---|
+| Connected agent call + return | Yes (trace `RelatedAgentStep`, supervision, SYNC) |
+| Case agent keeps a multi-turn conversation | No: each call is one request/reply; follow-ups go to the orchestrator |
+| Hidden from picker | Not determinable here (Service agent, no channel, no access grant) |
+| `$User` | **Through the orchestrator: the employee (Lal).** Called directly: the POC Agent user |
+| CHECK scoping | Follows `$User`: through orchestrator POC-P2-T01 → DUPLICATE 00001028; directly → NOT_FOUND |
+| submission_id reused across calls / across return to orchestrator | Yes / Yes (same Case-agent session) |
+| Authorized agent not refused | Yes. Unauthorized user from the agent: not tested this phase |
+
+### Test records created in Phase 3
+
+| Case | Log | Submission ID | Requester | How |
+|---|---|---|---|---|
+| 00001032 (500ak00003tQv9WAAS) | SUB-000007 | POC-P3-4ZKJ3T1V8QY | POC Agent | Case agent previewed directly (T5, T6) |
+| 00001033 | SUB-000008 | POC-P3-5ZK3Y2Q9RL | Lal | Through the orchestrator (T7) |
+
+Counts after Phase 3: 6 Cases with Origin Agent, 6 log rows (were 4 and 4). Nothing deleted.
+Transcripts: `.sfdx/agents/<botId>/sessions/` in the build checkout (not committed).
+
+### Earlier: Phase 2
 
 **POC Phase 1 (schema and access)** is done: `POC_Submission_Log__c` (7 fields, Private, unique case-sensitive
 `Submission_Id__c`), Case Origin **Agent**, Case Types General Inquiry / Access Request / Technical Issue, and the
@@ -59,9 +94,8 @@ and not in the repo.
 
 ### What `$User` resolves to
 
-Not verified yet. Every test ran as Lal, so Requester = Lal. When the agent calls the Flow in Phase 3, check
-whether Requester is the POC Agent user or the employee. If it's always the agent user, CHECK's
-per-requester scoping protects nothing between employees, and "requester" means the agent.
+Answered in Phase 3: through the Employee orchestrator the Flow runs as the employee; called directly, the Case
+agent runs as the POC Agent user. Keep the Case agent channel-less.
 
 ### Not verified
 
@@ -69,8 +103,7 @@ per-requester scoping protects nothing between employees, and "requester" means 
   There's no way to force it without two calls at the same moment.
 - INDETERMINATE (a Reserved row left behind, or the log update failing after the Case exists): the branches
   are built but no test reached them.
-- The **agent user** running the Flow. The tests only showed that a user without the custom permission is
-  refused, by the Flow, not by `flowAccesses`.
+- A user without POC_Case_Agent_Access calling through the agent (Phase 2 tested it only at Flow level).
 - Known limit: if two calls arrive at the same moment and both reuse the same **Failed** row, both could create
   a Case. Flow can't lock the row.
 
@@ -88,12 +121,16 @@ Cases 00001028–00001031 (Origin Agent) and logs SUB-000003–SUB-000006. Also 
 
 ## Next steps
 
-1. **Phase 3:** the headless Case Creation Agent, with `POC_Create_Case` as its only action. Check what
-   `$User` is when the agent runs it.
-2. Decide after Phase 6 whether `POC_Submission_Log__c` gets a tab.
-3. Older, still open: the UC Assist tests T1–T8, the sender address, and the PR from `develop` to `main`.
+1. **Phase 4/5:** build the real Knowledge agent and Case agent on the proven pattern (supervisor mode,
+   Case agent as a channel-less Service agent). Plan intake so it doesn't need a multi-turn Case agent.
+2. Decide whether to delete the Phase 3 test Cases 00001032 and 00001033 (logs SUB-000007, SUB-000008).
+3. Decide after Phase 6 whether `POC_Submission_Log__c` gets a tab.
+4. Older, still open: the UC Assist tests T1–T8, the sender address, and the PR from `develop` to `main`.
 
 ## Things the next session should know
+
+- To activate a new version of `POC_Case_Agent_Stub`, deactivate `POC_Knowledge_Agent_Stub` first, then
+  reactivate it. A newly activated version took about a minute to be used by preview.
 
 - `flowAccesses` doesn't stop a System Administrator from running the Flow, and the Einstein Agent User
   profile has Run Flows. The custom permission check inside the Flow is the real gate.

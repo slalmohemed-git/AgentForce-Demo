@@ -39,6 +39,17 @@ that it is real.
   *Seen 2026-11-19: Lal ran POC_Create_Case with POC_Case_Agent_Access removed; only the custom permission
   check refused it.*
 
+- **A connected (related) agent can't change its active version while an Active agent uses it.** `sf agent activate`
+  fails with "Agent you are trying to deactivate is in use by other agents". Deactivate the orchestrator, activate the
+  new version, reactivate the orchestrator. After activation, preview kept running the old version for about a
+  minute. *Hit 2026-11-19, cost two test runs on the wrong version.*
+- **The `$User` of a Service agent depends on how it's reached.** Previewed directly, the POC Case agent ran its Flow
+  as its default agent user. Called in supervisor mode from an Employee agent, the same Flow ran as the employee.
+  *Seen 2026-11-19 (Cases 00001032 vs 00001033).*
+- **Agent Script: telling the model "never make up a submission ID" stops it filling a `@utils.setVariables` slot.**
+  It passed an empty string three times until the instruction explicitly told it to create the value.
+  *Hit 2026-11-19, cost three publishes.*
+
 ## This client's environment
 
 <!-- Specific to this org: a validation rule that fires unexpectedly, a managed package that
