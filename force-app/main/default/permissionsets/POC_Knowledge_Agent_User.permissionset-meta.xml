@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentAccesses>
+        <agentName>POC_Knowledge_Agent</agentName>
+        <enabled>true</enabled>
+    </agentAccesses>
+    <description>POC Phase 6: lets an employee open POC_Knowledge_Agent in the agent panel. No other agent, no data access (Knowledge read is in POC_Knowledge_Agent_Access, Case creation in POC_Case_Agent_Access).</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>POC Knowledge Agent User</label>
+</PermissionSet>

@@ -17,3 +17,19 @@ Session 98d70d6d · branch `develop` · org lal-devedition · no Jira (specs liv
 - [ ] Flow Reset Portal Password
 - [ ] Agent Script authoring bundle (UC Assist): validate, publish, preview
 - [ ] Testing Center T1–T8
+
+# Phase 6 — End-to-end testing as non-admin employees
+- [x] Step 1 survey (read-only) — findings reported 2026-11-19
+- [ ] Get approval: users, permission set, seat handling, wording fix
+- [ ] Step 2 create test users + POC_Knowledge_Agent_User permset; read back; access matrix
+- [ ] Step 3 wording fix in POC_Knowledge_Agent (line 244), publish v8, read back, trace
+- [ ] Step 4 docs/poc-phase6-test-script.md; run E1–E12 with Lal; verify after each
+- [ ] Step 5 INDETERMINATE at Flow level (approval for the fake log row)
+- [ ] Step 6 decision record, handoff.md, gotchas (if real), commit to develop
+- [x] Phase 6 Step 2: POC_Knowledge_Agent_User deployed (0Afak00000tWoTSCA0), grant read back on POC_Knowledge_Agent only
+- [x] Phase 6 Step 2: Employees A (005ak00000oWvKvAAK) and B (005ak00000oWFryAAG) created; assignments read back
+- [x] Phase 6 Step 3: POC_Knowledge_Agent v8 published and activated; trace session 01a1f4d3-dec3-7fcd-9899-d91bd8bccd30 shows v8
+- [x] Phase 6 Step 4: docs/poc-phase6-test-script.md written
+- [ ] Phase 6 Step 4: Lal runs P0, E1–E12 in the panel; Orchestrate checks each
+- [ ] Phase 6 Step 5: INDETERMINATE at Flow level (needs approval)
+- [ ] Phase 6 Step 6: decision record, handoff, commit
