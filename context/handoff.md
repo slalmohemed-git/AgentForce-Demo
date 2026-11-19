@@ -225,23 +225,23 @@ with confirmation.
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
 ### Engagement state — 2026-11-19
-**Status:** on track — Phase 4 Knowledge agent pushed to develop (c0ec2cb); UC Assist email/repo items still open; Phase 5 next
+**Status:** on track — Phase 6 partly done: permset deployed, Employees A/B set up, Knowledge Agent v8 Active; develop at 0a6f0b0; E1–E12 tests pending
 
 **Done this session**
-- Committed and pushed POC_Knowledge_Agent bundle and POC_Knowledge_Answer template (c00a140) to develop
-- Pushed Phase 4 decision record, handoff.md and gotchas.md (c0ec2cb); remote develop confirmed at c0ec2cb
-- Deployed POC_Knowledge_Answer v2 via metadata and verified body in org; POC_Knowledge_Agent v3 published and Active, clarify limit 2
-- T1/T2 answers with Source lines and T8/T3b handoff to Case stub verified; Case and submission log counts unchanged at 6 and 6
+- Committed and pushed docs/poc-phase6-test-script.md, new POC_Knowledge_Agent_User permission set, POC_Knowledge_Agent v8 wording fix, tasks/todo.md and tasks/audit.log to develop (0a6f0b0)
+- Verified on GitHub that develop points at 0a6f0b0 with the expected 5 files
+- Deployed POC_Knowledge_Agent_User permission set and set up Employees A and B (checked in org earlier this session)
+- POC_Knowledge_Agent v8 confirmed Active via trace (checked in org earlier this session)
 
 **Open items**
+- Run P0 as Employee A via Login As to check whether the Agentforce panel appears
+- Run tests E1–E12 from the test script
+- INDETERMINATE test pending; needs user approval before creating the fake log row
+- Write Phase 6 decision record
+- Update handoff.md
+- Turn B into C and commit to develop
 - Search Gmail Spam and All Mail for 'Your UC verification code' email; check Setup → Email Log Files if not found
 - Fix sender address: clear Org_Wide_Email_Address__c or verify non-Gmail domain sender
-- Rerun T6 handoff test with fresh verification code
-- Complete and test T1–T8 test suite end to end
-- T10 (no Knowledge access) not tested; Preview runs only as admin Lal
-- T7 prompt injection refused by platform check before routing; real questions in that message get no Knowledge search
-- Update PR #1 description, spec changelog, tasks/todo.md; commit D01 to docs/
-- Add Verification Code tab and read-only permission set for admin audit trail access
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
@@ -257,10 +257,13 @@ with confirmation.
 - Verification email not arriving (Gmail SPF/DMARC rejection of Salesforce-sent mail claiming @gmail.com sender)
 
 **Next**
+- Run P0 as Employee A via Login As and report whether the Agentforce panel appears
+- If P0 fails, move Agentforce (Default) seat from Lal to Employee A
+- Run E1 ('How do I enrol in a course?') and check the Source link
+- Run E2–E12 from docs/poc-phase6-test-script.md
+- Ask user for approval before the INDETERMINATE test fake log row
+- Commit Phase 6 decision record, handoff.md update, and B→C change to develop
 - Phase 5: replace stub handoff (marked '# PHASE5: replace stub target') with real Case intake
-- Search Gmail Spam/All Mail and Salesforce email log for verification code; fix sender address
-- Rerun T6 with fresh code; complete T1–T8 and test T10 with a non-admin user
-- Commit D01 and update repo records (PR #1, spec changelog, todo.md)
 - Merge PR #1 to main and schedule Deploy session
 
 **Checked live on 2026-11-19:** the repository
@@ -270,8 +273,8 @@ with confirmation.
 | Type | BUILD |
 | Outcome | COMPLETED |
 | Branch | `develop` |
-| Name | Poc-Antioch-Build-p4 |
-| Session | `e56d76ae-f0de-4bd2-94a0-08222452ba42` |
+| Name | Poc-Antioch-Build-p6 |
+| Session | `af221bec-b78f-47b2-a1d6-125e9e4ed372` |
 **In its own words (excerpt):**
 ━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
 • Code committed: yes (branch develop)
@@ -281,17 +284,16 @@ with confirmation.
 Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Both commits are pushed to `develop`, and the remote branch now points at `c0ec2cb`. Nothing went to `main`.
+The commit is pushed to `develop` as **`0a6f0b0`**, and nothing went to `main`. I checked GitHub: the remote `develop` now points at `0a6f0b0`, and the commit has the 5 files I expected:
 
-| Commit | What's in it |
-|---|---|
-| `c00a140` | The `POC_Knowledge_Agent` bundle (2 files) and the `POC_Knowledge_Answer` template (1 file) |
-| `c0ec2cb` | The Phase 4 decision record, `handoff.md` and `gotchas.md` |
+- `docs/poc-phase6-test-script.md`
+- `POC_Knowledge_Agent_User.permissionset-meta.xml`
+- `POC_Knowledge_Agent.agent` (the v8 wording fix)
+- `tasks/todo.md` and `tasks/audit.log`
 
-I checked the remote: `git ls-remote` shows `develop` at `c0ec2cb`, and the decision record is in `context/decisions/` on `develop`. The first push attempt failed because the fresh checkout had no git author name or email. I set them to match commit 1 and the second attempt worked.
-
-**Phase 4, done and checked earlier this session:**
-- **Template:** `POC_Knowledge_Answer` was deployed through metada
+**Where Phase 6 stands**
+- **Done and checked in the org:** the new permission set is deployed, Employees A and B are set up, and POC_Knowledge_Agent v8 is Active (a trace confirms the agent is running on v8). There are still 13 Cases and 13 logs.
+- **Not done yet:** tests E1–E12, the INDETERMINATE test (I'll ask you before I create the fake log row), the decisio
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
