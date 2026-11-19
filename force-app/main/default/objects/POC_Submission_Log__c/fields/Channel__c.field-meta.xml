@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Channel__c</fullName>
+    <label>Channel</label>
+    <description>How the submission arrived: through the agent conversation or the direct form. Origin: POC-Antioch Phase 1.</description>
+    <inlineHelpText>Agent Assisted or Direct Form.</inlineHelpText>
+    <type>Picklist</type>
+    <required>false</required>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Agent Assisted</fullName><default>false</default><label>Agent Assisted</label></value>
+            <value><fullName>Direct Form</fullName><default>false</default><label>Direct Form</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

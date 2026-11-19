@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Case__c</fullName>
+    <label>Case</label>
+    <description>Case created for this submission. Empty until the Case exists. Origin: POC-Antioch Phase 1.</description>
+    <inlineHelpText>Filled in once the Case is created.</inlineHelpText>
+    <type>Lookup</type>
+    <referenceTo>Case</referenceTo>
+    <relationshipName>POC_Submission_Logs</relationshipName>
+    <relationshipLabel>POC Submission Logs</relationshipLabel>
+    <required>false</required>
+    <deleteConstraint>SetNull</deleteConstraint>
+</CustomField>

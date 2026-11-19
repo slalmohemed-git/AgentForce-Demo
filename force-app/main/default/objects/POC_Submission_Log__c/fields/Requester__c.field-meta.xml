@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requester__c</fullName>
+    <label>Requester</label>
+    <description>Internal user who asked for the Case. Required by validation rule Requester_Required, because a User lookup cannot be required at field level. Origin: POC-Antioch Phase 1.</description>
+    <inlineHelpText>The user the Case was raised for.</inlineHelpText>
+    <type>Lookup</type>
+    <referenceTo>User</referenceTo>
+    <relationshipName>POC_Submission_Logs</relationshipName>
+    <required>false</required>
+</CustomField>

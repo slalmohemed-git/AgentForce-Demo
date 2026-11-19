@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowTest xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>CHECK on an unknown submission ID returns NOT_FOUND.</description>
+    <flowApiName>POC_Create_Case</flowApiName>
+    <label>POC Create Case Check Unknown</label>
+    <testPoints>
+        <elementApiName>Start</elementApiName>
+        <parameters><leftValueReference>Mode</leftValueReference><type>InputVariable</type><value><stringValue>CHECK</stringValue></value></parameters><parameters><leftValueReference>SubmissionId</leftValueReference><type>InputVariable</type><value><stringValue>FT-UNKNOWN-0001</stringValue></value></parameters>
+    </testPoints>
+    <testPoints>
+        <assertions><conditions><leftValueReference>ResultCode</leftValueReference><operator>EqualTo</operator><rightValue><stringValue>NOT_FOUND</stringValue></rightValue></conditions></assertions>
+        <elementApiName>Finish</elementApiName>
+    </testPoints>
+</FlowTest>

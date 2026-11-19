@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Code_TTL_Minutes__c</fullName>
+    <description>Minutes a code stays valid.</description>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <inlineHelpText>Minutes a code stays valid.</inlineHelpText>
+    <label>Code TTL Minutes</label>
+    <required>false</required>
+    <type>Number</type>
+    <precision>3</precision>
+    <scale>0</scale>
+</CustomField>

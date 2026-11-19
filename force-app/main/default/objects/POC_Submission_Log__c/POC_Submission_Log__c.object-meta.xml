@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>POC Submission Log</label>
+    <pluralLabel>POC Submission Logs</pluralLabel>
+    <description>Idempotency key and audit trail for Case creation by the POC Case agent and form. One record per confirmed submission. Holds no student or personal data. Origin: POC-Antioch Phase 1.</description>
+    <nameField>
+        <label>Submission Log Number</label>
+        <type>AutoNumber</type>
+        <displayFormat>SUB-{000000}</displayFormat>
+        <trackHistory>false</trackHistory>
+    </nameField>
+    <compactLayoutAssignment>POC_Submission_Log_Compact</compactLayoutAssignment>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableBulkApi>true</enableBulkApi>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <enableSearch>false</enableSearch>
+    <enableSharing>true</enableSharing>
+    <enableStreamingApi>true</enableStreamingApi>
+    <externalSharingModel>Private</externalSharingModel>
+    <sharingModel>Private</sharingModel>
+    <visibility>Public</visibility>
+</CustomObject>

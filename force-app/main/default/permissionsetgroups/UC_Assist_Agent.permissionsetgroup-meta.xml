@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSetGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Job function group for the UC Assist Einstein agent user: data access plus action access for the password reset build.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>UC Assist Agent</label>
+    <permissionSets>APP_UC_Assist_Agent</permissionSets>
+    <permissionSets>DATA_Identity_Verification_CRU</permissionSets>
+    <status>Updated</status>
+</PermissionSetGroup>

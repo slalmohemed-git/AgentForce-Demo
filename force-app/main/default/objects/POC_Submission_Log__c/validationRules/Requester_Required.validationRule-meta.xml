@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Requester_Required</fullName>
+    <active>true</active>
+    <description>Makes Requester mandatory on every POC Submission Log. Needed because Salesforce does not allow a required lookup to User at field level. Origin: POC-Antioch Phase 1.</description>
+    <errorConditionFormula>ISBLANK(Requester__c)</errorConditionFormula>
+    <errorDisplayField>Requester__c</errorDisplayField>
+    <errorMessage>Requester is required. Set it to the user the Case is being raised for.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Settings for the UC Assist password reset build: code lifetime, limits, sender address and the Case queue. Avoids hard-coded values in Apex and Flow.</description>
+    <label>UC Assist Setting</label>
+    <pluralLabel>UC Assist Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

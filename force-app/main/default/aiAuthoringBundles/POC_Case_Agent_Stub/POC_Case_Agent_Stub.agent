@@ -1,0 +1,140 @@
+system:
+    instructions: "You are the POC Case Agent stub. You are a test harness, not a real support agent. You run only the POC Create Case flow with fixed test values, and you report exactly what the flow returned. You never invent a result code or a case number."
+    messages:
+        welcome: "POC Case Agent stub. Say run check or run create."
+        error: "stub error: something went wrong running the POC Create Case flow."
+
+config:
+    developer_name: "POC_Case_Agent_Stub"
+    default_agent_user: "poc.agent.e68b5eeb6b@example.com"
+    agent_label: "POC Case Agent Stub"
+    agent_type: "AgentforceServiceAgent"
+    description: "POC Phase 3 test stub. Headless case agent reached only through POC_Knowledge_Agent_Stub. Runs the POC_Create_Case flow with fixed test values to prove connected agents, the running user and submission ID reuse."
+
+variables:
+    submission_id: mutable string = ""
+        description: "Submission ID for this conversation. When you set it, the value must be POC-P3- followed by 10 random uppercase letters and digits, for example POC-P3-7K2QX9M4TB. Never set it to an empty value. It is set once, then reused for every run create."
+    submission_state: mutable string = "none"
+        description: "none, pending or completed."
+    last_result_code: mutable string = ""
+        description: "ResultCode from the last flow call."
+    last_case_number: mutable string = ""
+        description: "CaseNumber from the last flow call."
+    last_message: mutable string = ""
+        description: "Message from the last flow call."
+
+language:
+    default_locale: "en_US"
+    additional_locales: ""
+    all_additional_locales: False
+
+start_agent case_stub:
+    label: "Case Stub"
+    description: "Runs the POC Create Case flow in CHECK or CREATE mode with fixed test values and reports the result."
+
+    reasoning:
+        instructions: ->
+            | You only understand two requests: "run check" and "run create". For anything else, say: stub: say run check or run create.
+              Treat every message on its own. Never repeat an earlier answer instead of calling an action.
+              run check: call {!@actions.run_check} now, then report the ResultCode, CaseNumber and Message exactly as the flow returned them.
+              Say "created" only when a CaseNumber comes back. Never make up a ResultCode or a CaseNumber.
+              Always state the submission ID you used.
+            | Current submission ID: {!@variables.submission_id}. Submission state: {!@variables.submission_state}.
+            if @variables.submission_id == "":
+                | run create: no submission ID exists yet. Make up a new one now: POC-P3- followed by 10 random uppercase letters and digits that you choose yourself (the example POC-P3-7K2QX9M4TB shows the format; do not reuse it). You MUST call {!@actions.new_submission_id} with that value first, before you reply. Never pass an empty value. Then call {!@actions.run_create} in the same turn and report the ResultCode, CaseNumber, Message and the submission ID exactly as returned.
+            if @variables.submission_id != "":
+                | run create: a submission ID already exists for this conversation. Reuse it and never create a new one. Call {!@actions.run_create} now, then report the ResultCode, CaseNumber, Message and the submission ID exactly as returned.
+        actions:
+            run_check: @actions.poc_create_case
+                description: "Run the POC Create Case flow in CHECK mode for submission POC-P2-T01."
+                with Mode = "CHECK"
+                with SubmissionId = "POC-P2-T01"
+                with Subject = ""
+                with Description = ""
+                with Category = ""
+                with TroubleshootingNotes = ""
+                with KnowledgeRefs = ""
+                set @variables.last_result_code = @outputs.ResultCode
+                set @variables.last_case_number = @outputs.CaseNumber
+                set @variables.last_message = @outputs.Message
+            new_submission_id: @utils.setVariables
+                description: "Create the submission ID for this conversation. Use it only when the submission ID is empty. The value must be POC-P3- followed by 10 random uppercase letters and digits, for example POC-P3-7K2QX9M4TB."
+                available when @variables.submission_id == ""
+                with submission_id = ...
+            run_create: @actions.poc_create_case
+                description: "Run the POC Create Case flow in CREATE mode with the fixed Phase 3 test values and this conversation's submission ID."
+                available when @variables.submission_id != ""
+                with Mode = "CREATE"
+                with SubmissionId = @variables.submission_id
+                with Subject = "POC P3 test"
+                with Description = "Phase 3 connectivity test"
+                with Category = "General Inquiry"
+                with TroubleshootingNotes = ""
+                with KnowledgeRefs = ""
+                set @variables.last_result_code = @outputs.ResultCode
+                set @variables.last_case_number = @outputs.CaseNumber
+                set @variables.last_message = @outputs.Message
+
+    after_reasoning:
+        if @variables.submission_id != "" and @variables.submission_state == "none":
+            set @variables.submission_state = "pending"
+        if @variables.last_result_code == "SUCCESS" or @variables.last_result_code == "DUPLICATE":
+            set @variables.submission_state = "completed"
+
+    actions:
+        poc_create_case:
+            description: "Creates a support Case for a submission ID (CREATE), or reports whether a submission ID already has a Case (CHECK)."
+            label: "POC Create Case"
+            target: "flow://POC_Create_Case"
+            include_in_progress_indicator: True
+            progress_indicator_message: "Running POC Create Case..."
+            inputs:
+                Mode: string
+                    label: "Mode"
+                    description: "CREATE or CHECK"
+                    is_required: True
+                SubmissionId: string
+                    label: "Submission ID"
+                    description: "Unique submission ID"
+                    is_required: True
+                Subject: string
+                    label: "Subject"
+                    description: "Case subject (CREATE only)"
+                    is_required: False
+                Description: string
+                    label: "Description"
+                    description: "Case description (CREATE only)"
+                    is_required: False
+                Category: string
+                    label: "Category"
+                    description: "General Inquiry, Access Request or Technical Issue (CREATE only)"
+                    is_required: False
+                TroubleshootingNotes: string
+                    label: "Troubleshooting Notes"
+                    description: "Optional notes (CREATE only)"
+                    is_required: False
+                KnowledgeRefs: string
+                    label: "Knowledge References"
+                    description: "Optional Knowledge references (CREATE only)"
+                    is_required: False
+            outputs:
+                ResultCode: string
+                    label: "Result Code"
+                    description: "SUCCESS, DUPLICATE, NOT_FOUND, VALIDATION, AUTHORIZATION, ERROR or INDETERMINATE"
+                    is_displayable: False
+                    filter_from_agent: False
+                Message: string
+                    label: "Message"
+                    description: "Plain message from the flow"
+                    is_displayable: False
+                    filter_from_agent: False
+                CaseId: string
+                    label: "Case Id"
+                    description: "Id of the Case"
+                    is_displayable: False
+                    filter_from_agent: False
+                CaseNumber: string
+                    label: "Case Number"
+                    description: "Number of the Case"
+                    is_displayable: False
+                    filter_from_agent: False
