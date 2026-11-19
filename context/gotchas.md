@@ -73,3 +73,26 @@ that it is real.
   Knowledge action (tool enabled, no FunctionStep). Store the action output in a variable and branch the
   instructions on it (`if @variables.last_answer == ""` → call it). Nested `if` isn't allowed; use `and`.
   *Hit 2026-11-19, POC_Knowledge_Agent v2, cost one republish.*
+
+- **Agent Script: a `connected_subagent` with `inputs:` needs the target agent's matching variables marked
+  `visibility: "External"`.** Variables default to Internal, and publishing the orchestrator then fails with "The agent
+  … specified as the target has no variables defined, but the inputs block specifies input mappings", even though
+  `validate` passes. The only values are Internal / External. *Hit 2026-11-19 (POC Phase 5), cost one failed publish
+  and a republish of POC_Case_Agent.*
+- **Agent Script: `run @actions.X` must name an action definition (the subagent-level `actions:` entry, e.g.
+  `poc_create_case`) with its own `with` / `set` lines, not a reasoning tool name.** Naming a tool (`create_case`)
+  validates and publishes, but every turn of the agent, on every path, fails with "I apologize, but I encountered an
+  unexpected error" (ACTION_FAILED at the first node). Decode `agentGraph/*.json` (base64) after publishing and check that
+  each `run` target is in `actionDefinitions`. A connected agent is a `supervision` tool, so it can't be `run` at all.
+  *Hit 2026-11-19, both POC agents broken for about 5 minutes until rolled back with `sf agent activate --version`.*
+- **Agent Script: a `set` on a `@connected_subagent` tool compiles (it shows in the graph as `stateUpdates`) but is
+  never applied at runtime.** Don't use it to detect that the connected agent was called. *Hit 2026-11-19, Knowledge v6:
+  the request stayed "awaiting confirmation" after a SUCCESS.*
+- **The model can skip a connected-agent call and invent its reply.** POC_Knowledge_Agent v4 entered the submit step
+  with the tool enabled, made no call, and replied "The Case agent replied: SUCCESS"; no Case existed. Make the
+  downstream action deterministic (`run`) where you can, and keep retries safe (same submission ID → CHECK →
+  DUPLICATE / NOT_FOUND → CREATE). *Hit 2026-11-19, found only because the Case and log counts didn't move.*
+- **`sf agent preview start --context-variables` with a boolean (`confirmed=true` or `True`) stops the agent's
+  planner, and the platform answers with invented text ("Your confirmed support request has been submitted") followed by
+  SessionEnded.** No action runs. String and number context variables work. Always check record counts, not the reply.
+  *Hit 2026-11-19 (POC_Case_Agent direct preview), cost the planned direct tests T8 and T10.*
