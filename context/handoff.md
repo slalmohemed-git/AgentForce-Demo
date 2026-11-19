@@ -3,11 +3,43 @@
 > **Rewritten at the end of every session.** This file is *now*; [`gotchas.md`](gotchas.md) is *forever*.
 > If this file and [`../CONTEXT.md`](../CONTEXT.md) disagree, this one is newer.
 
-**Last updated:** 2026-11-19 · **By:** Orchestrate build session (Poc-Antioch-Build-p3)
+**Last updated:** 2026-11-19 · **By:** Orchestrate build session (Poc-Antioch-Build-p4)
 
 ---
 
 ## Where things stand
+
+**POC Phase 4 (Knowledge Agent)** is done. See
+[`decisions/2026-11-19-poc-phase4-knowledge-agent.md`](decisions/2026-11-19-poc-phase4-knowledge-agent.md).
+Read back in `lal-devedition` on 2026-11-19:
+
+- Prompt template `POC_Knowledge_Answer` (Flex): active version `_2`, Published, body matches the intended rules
+  character for character. Deployed by Metadata API; no Prompt Builder step. Data source: the existing retriever
+  `Agent_Knowledge_Answer_Retriever_1Cx_ajn744d13c6` (not changed).
+- `POC_Knowledge_Agent`: Employee agent (InternalCopilot), no default user, **v3 Active** (v1, v2 Inactive).
+  Clarify limit 2. Handoff calls `POC_Case_Agent_Stub`, marked `# PHASE5: replace stub target`.
+- Unchanged: `POC_Knowledge_Agent_Stub` v1 Active, `POC_Case_Agent_Stub` v4 Active.
+- Nothing was assigned by hand in Phase 4. Lal (tester) holds Prompt Template Manager and Knowledge User; Lal does
+  **not** hold POC_Knowledge_Agent_Access (Knowledge read comes from the System Administrator profile).
+
+### Phase 4 tests (v3, `sf agent preview` as Lal; Cases with Origin Agent / logs = 6 / 6 before and after every test)
+
+| Test | Result |
+|---|---|
+| T1 enrol | Pass: 000001008 with linked Source line; trace shows `POC_Knowledge_Answer` called and its response shown unchanged |
+| T2 refund | Pass: 000001015 with link; every bullet matches the article text |
+| T3 Talkdesk | Pass: "couldn't find an approved answer", one clarifying question, Case offer; T3b "yes please" → Case stub called |
+| T4 vague ×3 | Pass: 2 clarifying questions, then stops and offers a Case |
+| T5 weather | Pass: declined, no other channel suggested |
+| T6 sensitive | Pass: refused; made-up name and ID not repeated, no action called |
+| T7 injection | Pass (no change in rules), but via the platform `Prompt_Injection` topic, not this agent's router |
+| T8 handoff | Pass: Case stub called (`RelatedAgentStep`), reply quoted, control returned; "run check" → DUPLICATE 00001028; no Case created |
+| T9 link | Partly verified: link arrives intact in the preview response; Trusted URLs `Org_Record_Links`, `Org_Lightning` are active. Clicking it in the Lightning panel was not tested |
+| T10 access | **Not tested**: preview runs as the CLI user (Lal, admin); no non-admin test user exists |
+
+Transcripts were saved in the build session's working folder (not committed).
+
+### Earlier: Phase 3
 
 **POC Phase 3 (connected agents)** is done: GO, keep two agents. See
 [`decisions/2026-11-19-poc-phase3-connected-agent-go-no-go.md`](decisions/2026-11-19-poc-phase3-connected-agent-go-no-go.md).
@@ -121,9 +153,10 @@ Cases 00001028–00001031 (Origin Agent) and logs SUB-000003–SUB-000006. Also 
 
 ## Next steps
 
-1. **Phase 4/5:** build the real Knowledge agent and Case agent on the proven pattern (supervisor mode,
-   Case agent as a channel-less Service agent). Plan intake so it doesn't need a multi-turn Case agent.
-2. Decide whether to delete the Phase 3 test Cases 00001032 and 00001033 (logs SUB-000007, SUB-000008).
+1. **Phase 5:** build the real Case agent and intake, then replace the `# PHASE5: replace stub target` handoff in
+   `POC_Knowledge_Agent`. Intake must happen before the Case-agent call (one request/reply per call). To change the
+   Case agent's active version, deactivate `POC_Knowledge_Agent` and `POC_Knowledge_Agent_Stub` first.
+2. Test T9 (click the Source link in the Lightning panel) and T10 (a non-admin user without Knowledge read).
 3. Decide after Phase 6 whether `POC_Submission_Log__c` gets a tab.
 4. Older, still open: the UC Assist tests T1–T8, the sender address, and the PR from `develop` to `main`.
 

@@ -63,3 +63,13 @@ that it is real.
      three days, a deploy window, a person who must be in the room. -->
 
 -
+
+- **A message that says "ignore your rules…" never reaches your router.** The platform routes it to its own
+  `Prompt_Injection` topic, which refuses the whole message, so an embedded real question ("…how do I reset a Mogli
+  template?") gets no Knowledge search. Routing rules for injection in your script don't run. *Seen 2026-11-19
+  (POC_Knowledge_Agent T7, trace `Router → Prompt_Injection`), cost one republish chasing it.*
+- **Agent Script: a "no answer" instruction can make the model skip the action.** "If it returns NO_KNOWLEDGE_ANSWER,
+  fails or returns nothing, say no answer" led the model to reply "no approved answer" without calling the
+  Knowledge action (tool enabled, no FunctionStep). Store the action output in a variable and branch the
+  instructions on it (`if @variables.last_answer == ""` → call it). Nested `if` isn't allowed; use `and`.
+  *Hit 2026-11-19, POC_Knowledge_Agent v2, cost one republish.*
