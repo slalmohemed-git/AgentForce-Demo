@@ -30,6 +30,15 @@ that it is real.
   doing the publish, and **Agentforce Service Agent User** on the agent's running user. Assign both, then
   publish. *Hit 2026-10-28, took two failed publishes to find.*
 
+- **A FlowTest assertion takes exactly one condition.** Two conditions in one `<assertions>` block fail the deploy
+  with "contains an assertion that exceeds the limit of conditions"; use one `<assertions>` per condition.
+  Flow Tests on an autolaunched flow are supported here (inputs as `<type>InputVariable</type>` at the `Start`
+  test point, assertions at `Finish`). *Hit 2026-11-19, cost one failed deploy.*
+- **`flowAccesses` on a permission set doesn't stop an admin from running a flow** (and the Einstein Agent User
+  profile has Run Flows). Enforce who may call a flow with a custom permission checked inside the flow.
+  *Seen 2026-11-19: Lal ran POC_Create_Case with POC_Case_Agent_Access removed; only the custom permission
+  check refused it.*
+
 ## This client's environment
 
 <!-- Specific to this org: a validation rule that fires unexpectedly, a managed package that

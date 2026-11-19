@@ -3,50 +3,102 @@
 > **Rewritten at the end of every session.** This file is *now*; [`gotchas.md`](gotchas.md) is *forever*.
 > If this file and [`../CONTEXT.md`](../CONTEXT.md) disagree, this one is newer.
 
-**Last updated:** 2026-11-19 · **By:** Orchestrate build session (Poc-Antioch-Build-p1)
+**Last updated:** 2026-11-19 · **By:** Orchestrate build session (POC-Antioch-Build-P2)
 
 ---
 
 ## Where things stand
 
-**POC Phase 1 (schema and access) is done** and deployed to `lal-devedition` (deploy `0Afak00000tTsOjCAK`,
-16 of 16 components). Read back on 2026-11-19:
+**POC Phase 1 (schema and access)** is done: `POC_Submission_Log__c` (7 fields, Private, unique case-sensitive
+`Submission_Id__c`), Case Origin **Agent**, Case Types General Inquiry / Access Request / Technical Issue, and the
+permission sets `POC_Case_Agent_Access`, `POC_Knowledge_Agent_Access` and `POC_Submission_Log_Audit`.
 
-- `POC_Submission_Log__c`: Auto Number `SUB-{000000}`, Private, 7 fields. `Submission_Id__c` is Text(80),
-  Unique (case-sensitive), External ID. A duplicate key was rejected and a lowercase key was accepted.
-  The validation rule `Requester_Required` rejects a log with no Requester. (A User lookup can't be made
-  required at field level, so a rule does it.) The test records were deleted; the object is empty.
-- Case Origin now includes **Agent**. Case Type now includes **General Inquiry**, **Access Request** and
-  **Technical Issue**. The existing values are unchanged. Priority is unchanged.
-- No `Submission_Log__c` back-link on Case: `POC_Submission_Log__c.Case__c` already joins them.
-- Permission sets: `POC_Case_Agent_Access` (Case and log: Read, Create, Edit, no Delete, View All or Modify All),
-  `POC_Knowledge_Agent_Access` (Knowledge__kav Read, `Article_Body__c` Read, no Case),
-  `POC_Submission_Log_Audit` (log Read only).
+**POC Phase 2 (the Flow)** is done and deployed to `lal-devedition` (deploy `0Afak00000tUTHrCAO`, 3 of 3; Flow Tests
+in a second deploy, 3 of 3). Read back on 2026-11-19:
 
-The UC Assist and Staff_Assistant builds were not touched.
+- Flow `POC_Create_Case` (label "SUB - POC Create Case"), autolaunched, API 68, **v1 Active**, run mode
+  **System Context Without Sharing**. Inputs Mode, SubmissionId, Subject, Description, Category,
+  TroubleshootingNotes, KnowledgeRefs. Outputs ResultCode, Message, CaseId, CaseNumber.
+- The Flow, not the caller, sets: Requester = running user, Channel = Agent Assisted, Case Origin = Agent,
+  Type = Category (same-name map; any other Category is VALIDATION), Priority = **Medium**. The Case
+  Description is "Description / Troubleshooting Notes / Knowledge References" under labelled headings.
+- Custom permission `POC_Create_Case_Allowed`, granted only by `POC_Case_Agent_Access`, together with
+  `flowAccesses` for the Flow. The other two permission sets have neither.
+- Flow Tests (3, all pass with `sf flow run test -n POC_Create_Case`): missing Subject, bad Category, CHECK unknown ID.
+
+### Run mode and why
+
+System Context Without Sharing, because the log is Private and the agent user must find logs to detect duplicates.
+The Flow makes up for running in system mode by: checking `$Permission.POC_Create_Case_Allowed` first (both modes),
+setting Requester from `$User.Id` itself, scoping CHECK to the running user's logs, and, in CREATE, returning
+VALIDATION ("this submission ID is already in use") with no Case number when the ID belongs to another user.
+
+### Result codes, as tested (REST invocable call as Lal, 2026-11-19)
+
+| Test | Result | Agent Cases / logs after |
+|---|---|---|
+| Baseline | | 0 / 0 |
+| CREATE valid (POC-P2-T01) | SUCCESS, Case 00001028, log Created and linked | 1 / 1 |
+| CREATE missing Subject | VALIDATION "Subject is required." | 1 / 1 |
+| CREATE Category "Billing" | VALIDATION | 1 / 1 |
+| CREATE POC-P2-T01 again | DUPLICATE, 00001028 | 1 / 1 |
+| CREATE POC-P2-T05A, then T05B | SUCCESS 00001029, SUCCESS 00001030 | 3 / 3 |
+| CHECK T01 / unknown ID / "poc-p2-t01" / Mode "DELETE" | DUPLICATE / NOT_FOUND / NOT_FOUND / VALIDATION | 3 / 3 |
+| CREATE with forced Case failure (POC-P2-T08) | ERROR, no Case, log saved as **Failed** | 3 / 4 |
+| CHECK T08 | NOT_FOUND, "failed, retry is safe" | 3 / 4 |
+| CREATE T08 retry | SUCCESS 00001031, the Failed row was reused (now Created) | 4 / 4 |
+| CREATE and CHECK with POC_Case_Agent_Access removed from Lal | AUTHORIZATION, nothing written | 4 / 4 |
+
+### Transaction finding (tested, not assumed)
+
+When the Case create fails inside the Flow's handled fault path, the org **keeps** the log row: it was saved
+with Status Failed, Result_Code ERROR and a safe Detail (SUB-000006). Only the failed Case insert is lost. So
+ERROR means "no Case, retry is safe", and CHECK on that ID says the same. Forced with a temporary Case
+validation rule, `POC_Force_Fail_Test` (Subject = "POC-FORCE-FAIL"), which is now **inactive** in the org
+and not in the repo.
+
+### What `$User` resolves to
+
+Not verified yet. Every test ran as Lal, so Requester = Lal. When the agent calls the Flow in Phase 3, check
+whether Requester is the POC Agent user or the employee. If it's always the agent user, CHECK's
+per-requester scoping protects nothing between employees, and "requester" means the agent.
+
+### Not verified
+
+- The race path (a log insert that fails with DUPLICATE_VALUE because another call reserved the ID first).
+  There's no way to force it without two calls at the same moment.
+- INDETERMINATE (a Reserved row left behind, or the log update failing after the Case exists): the branches
+  are built but no test reached them.
+- The **agent user** running the Flow. The tests only showed that a user without the custom permission is
+  refused, by the Flow, not by `flowAccesses`.
+- Known limit: if two calls arrive at the same moment and both reuse the same **Failed** row, both could create
+  a Case. Flow can't lock the row.
 
 ## Assigned by hand (not in the repo)
 
-A fresh org needs these redone:
-
 | User | What | Why |
 |---|---|---|
-| POC Agent (`poc.agent.e68b5eeb6b@example.com`, `005ak00000oV1FxAAK`, Einstein Agent User profile) | User created; licence AgentforceServiceAgentUserPsl; permission sets AgentforceServiceAgentUser, POC_Case_Agent_Access, POC_Knowledge_Agent_Access | Running user for the POC agents. Publishing fails with a 401 without AgentforceServiceAgentUser. |
-| Lal (`slalmohemed.c437bd0a8ab7@agentforce.com`) | POC_Case_Agent_Access | So Lal could run the duplicate-key test. Lal already had AgentPlatformBuilder for publishing. |
+| POC Agent (`poc.agent.e68b5eeb6b@example.com`, `005ak00000oV1FxAAK`, Einstein Agent User profile) | Licence AgentforceServiceAgentUserPsl; permission sets AgentforceServiceAgentUser, POC_Case_Agent_Access, POC_Knowledge_Agent_Access | Running user for the POC agents |
+| Lal (`slalmohemed.c437bd0a8ab7@agentforce.com`) | POC_Case_Agent_Access (reassigned 2026-11-19 after the AUTHORIZATION test, now `0Paak00001Fy0aMCAR`) | Tests run as Lal |
+
+## Test data left in the org
+
+Cases 00001028–00001031 (Origin Agent) and logs SUB-000003–SUB-000006. Also the inactive validation rule
+`Case.POC_Force_Fail_Test`. Keep them, or delete them with confirmation.
 
 ## Next steps
 
-1. **Phase 2: the Flow** that reserves a `POC_Submission_Log__c` row and creates the Case. Add the Flow's
-   access (`<flowAccesses>`) to `POC_Case_Agent_Access` in that phase.
+1. **Phase 3:** the headless Case Creation Agent, with `POC_Create_Case` as its only action. Check what
+   `$User` is when the agent runs it.
 2. Decide after Phase 6 whether `POC_Submission_Log__c` gets a tab.
 3. Older, still open: the UC Assist tests T1–T8, the sender address, and the PR from `develop` to `main`.
 
 ## Things the next session should know
 
+- `flowAccesses` doesn't stop a System Administrator from running the Flow, and the Einstein Agent User
+  profile has Run Flows. The custom permission check inside the Flow is the real gate.
 - Submission_Id__c and Status__c don't appear in the permission sets' field permissions because both are
-  required fields, and Salesforce always grants access to required fields.
-- Lal's user couldn't see the log fields until POC_Case_Agent_Access was assigned: System Administrator has
-  no field access to new custom fields in this org.
+  required fields.
 
 <!-- orchestrate:session-state:start -->
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are

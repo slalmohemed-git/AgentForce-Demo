@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowTest xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>CREATE with no Subject returns VALIDATION naming Subject.</description>
+    <flowApiName>POC_Create_Case</flowApiName>
+    <label>POC Create Case Missing Subject</label>
+    <testPoints>
+        <elementApiName>Start</elementApiName>
+        <parameters><leftValueReference>Mode</leftValueReference><type>InputVariable</type><value><stringValue>CREATE</stringValue></value></parameters><parameters><leftValueReference>SubmissionId</leftValueReference><type>InputVariable</type><value><stringValue>FT-NOSUBJ-0001</stringValue></value></parameters><parameters><leftValueReference>Description</leftValueReference><type>InputVariable</type><value><stringValue>Test description</stringValue></value></parameters><parameters><leftValueReference>Category</leftValueReference><type>InputVariable</type><value><stringValue>General Inquiry</stringValue></value></parameters>
+    </testPoints>
+    <testPoints>
+        <assertions><conditions><leftValueReference>ResultCode</leftValueReference><operator>EqualTo</operator><rightValue><stringValue>VALIDATION</stringValue></rightValue></conditions></assertions><assertions><conditions><leftValueReference>Message</leftValueReference><operator>EqualTo</operator><rightValue><stringValue>Subject is required.</stringValue></rightValue></conditions></assertions>
+        <elementApiName>Finish</elementApiName>
+    </testPoints>
+</FlowTest>

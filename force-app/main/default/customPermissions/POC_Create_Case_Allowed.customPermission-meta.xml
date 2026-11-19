@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomPermission xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows the user to create and check Cases through the POC_Create_Case Flow. The Flow returns AUTHORIZATION to anyone without it. Granted only by POC_Case_Agent_Access. Origin: POC-Antioch Phase 2.</description>
+    <isLicensed>false</isLicensed>
+    <label>POC Create Case Allowed</label>
+</CustomPermission>
