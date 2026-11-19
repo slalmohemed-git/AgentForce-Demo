@@ -173,31 +173,32 @@ Cases 00001028–00001031 (Origin Agent) and logs SUB-000003–SUB-000006. Also 
 <!-- orchestrate:session-state:start -->
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are
      replaced next session; anything OUTSIDE it is yours and is never touched. -->
-### Engagement state — 2026-10-28
-**Status:** on track — UC Assist solution documented (D01); email delivery & repo records still need fixes before deploy
+### Engagement state — 2026-11-19
+**Status:** on track — Phase 4 Knowledge agent pushed to develop (c0ec2cb); UC Assist email/repo items still open; Phase 5 next
 
 **Done this session**
-- Wrote D01 — UC Assist Solution Summary (11 sections, 16 KB) covering deliverables, architecture, design, test status, and deployment order
-- Confirmed v3 active, Flow active, 23 Apex tests passing (91.9–100% coverage)
-- Identified repo gaps: PR #1 description outdated, spec changelog incomplete, todo.md not updated
+- Committed and pushed POC_Knowledge_Agent bundle and POC_Knowledge_Answer template (c00a140) to develop
+- Pushed Phase 4 decision record, handoff.md and gotchas.md (c0ec2cb); remote develop confirmed at c0ec2cb
+- Deployed POC_Knowledge_Answer v2 via metadata and verified body in org; POC_Knowledge_Agent v3 published and Active, clarify limit 2
+- T1/T2 answers with Source lines and T8/T3b handoff to Case stub verified; Case and submission log counts unchanged at 6 and 6
 
 **Open items**
 - Search Gmail Spam and All Mail for 'Your UC verification code' email; check Setup → Email Log Files if not found
 - Fix sender address: clear Org_Wide_Email_Address__c or verify non-Gmail domain sender
 - Rerun T6 handoff test with fresh verification code
 - Complete and test T1–T8 test suite end to end
-- Commit D01 to docs/, update PR #1 description, update spec changelog, update tasks/todo.md
+- T10 (no Knowledge access) not tested; Preview runs only as admin Lal
+- T7 prompt injection refused by platform check before routing; real questions in that message get no Knowledge search
+- Update PR #1 description, spec changelog, tasks/todo.md; commit D01 to docs/
 - Add Verification Code tab and read-only permission set for admin audit trail access
-- Review and merge PR #1 to main
-- Schedule Deploy session to production
 
 **Decisions**
 - Deploy Digital Experiences via enableNetworksEnabled=true to lal-devedition
 - Use Salesforce API 68.0
-- Routing model: MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
+- Routing model MOST_AVAILABLE; capacityType INHERITED, isAttributeBased false
 - Disable sendWelcomeEmail before deploy
-- Test UC_Assist in Preview panel (not in editing assistant chat)
-- Use test customer emails: Maria (slalmohemed+maria@gmail.com), Ken (slalmohemed+ken@gmail.com), stranger (stranger@example.com)
+- Test UC_Assist in Preview panel, not editing assistant chat
+- Use test customer emails: Maria, Ken, stranger@example.com
 - Fix router to always hand off immediately, never invent status claims
 - Push router fix after publish approval to prevent loss
 
@@ -205,38 +206,41 @@ Cases 00001028–00001031 (Origin Agent) and logs SUB-000003–SUB-000006. Also 
 - Verification email not arriving (Gmail SPF/DMARC rejection of Salesforce-sent mail claiming @gmail.com sender)
 
 **Next**
-- Search Gmail Spam and All Mail for verification code email; check Salesforce email log if not found
-- Fix sender address configuration
-- Request new verification code and rerun T6 test
+- Phase 5: replace stub handoff (marked '# PHASE5: replace stub target') with real Case intake
+- Search Gmail Spam/All Mail and Salesforce email log for verification code; fix sender address
+- Rerun T6 with fresh code; complete T1–T8 and test T10 with a non-admin user
 - Commit D01 and update repo records (PR #1, spec changelog, todo.md)
-- Add admin access to Verification Code audit trail
-- Complete T1–T8 test suite
-- Merge PR #1 and schedule Deploy session
+- Merge PR #1 to main and schedule Deploy session
 
-**Checked live on 2026-10-28:** the repository
-### Last session — 2026-10-28
+**Checked live on 2026-11-19:** the repository
+### Last session — 2026-11-19
 | | |
 |---|---|
 | Type | BUILD |
 | Outcome | COMPLETED |
 | Branch | `develop` |
-| Name | Demo-AgentBuild-UseCase-1 |
-| Session | `98d70d6d-c047-4d6d-aaf6-068be5a06345` |
+| Name | Poc-Antioch-Build-p4 |
+| Session | `e56d76ae-f0de-4bd2-94a0-08222452ba42` |
 **In its own words (excerpt):**
-I've written the summary of deliverables and technical design as **D01 — UC Assist Solution Summary**, and it's attached to this session. It's 11 sections and about 16 KB.
+━━ Build status (auto-checked from tool results — deploy = sf CLI exit, not runtime effect) ━━
+• Code committed: yes (branch develop)
+• Pushed to GitHub: yes
+• Validated (sf deploy validate): NOT verified
+• Deployed to org: no deploy in this session run — if an earlier run deployed, verify in the target org
+Next: open/refresh the PR → review → merge to main → run a Deploy session to ship. This work is NOT live yet.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**What it covers:**
-- **Deliverables:** the specs, design review and ADRs in git, the 43 Salesforce components, and the setup scripts and test data.
-- **Architecture:** option B, two subagents, and the three controls that stop an unverified reset (the action gate, a forced hand-off to verification, and a token re-check on the server).
-- **Detailed design:** the Agent Script subagents and variables, versions 1 to 3, the Verification Code object and its status lifecycle, the settings, the Apex classes with test coverage, the Flow steps, and the security controls.
-- **Status of each user story:** US-4 is fully met. The others are built but haven't been tested end to end yet. Live transfer to a human for US-5 is still out of scope.
-- **Open items, deployment order for a new org, and next steps.**
+Both commits are pushed to `develop`, and the remote branch now points at `c0ec2cb`. Nothing went to `main`.
 
-**Checked in `lal-devedition` before writing:**
-- Version 3 of `UC_Assist` is the active version.
-- The Flow is active.
-- All 23 Apex tests passed in the last validation, with coverage between 91.9% and 100% per class.
-- P
+| Commit | What's in it |
+|---|---|
+| `c00a140` | The `POC_Knowledge_Agent` bundle (2 files) and the `POC_Knowledge_Answer` template (1 file) |
+| `c0ec2cb` | The Phase 4 decision record, `handoff.md` and `gotchas.md` |
+
+I checked the remote: `git ls-remote` shows `develop` at `c0ec2cb`, and the decision record is in `context/decisions/` on `develop`. The first push attempt failed because the fresh checkout had no git author name or email. I set them to match commit 1 and the second attempt worked.
+
+**Phase 4, done and checked earlier this session:**
+- **Template:** `POC_Knowledge_Answer` was deployed through metada
 
 _[summary truncated — see the session record for the full text]_
 <!-- orchestrate:session-state:end -->
