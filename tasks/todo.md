@@ -33,3 +33,10 @@ Session 98d70d6d · branch `develop` · org lal-devedition · no Jira (specs liv
 - [ ] Phase 6 Step 4: Lal runs P0, E1–E12 in the panel; Orchestrate checks each
 - [ ] Phase 6 Step 5: INDETERMINATE at Flow level (needs approval)
 - [ ] Phase 6 Step 6: decision record, handoff, commit
+
+### Assigned by hand (for handoff.md)
+- 2026-11-19: POC_Knowledge_Agent_User assigned to Lal (assignment 0Paak00001G0XTiCAN) so Lal can open POC Knowledge Agent in the panel. Lal's runs do not count as Phase 6 tests.
+
+### Fix: sensitive-data false positive (found by Lal in the panel, 2026-11-19)
+- [ ] Narrow the sensitive rule to data about a specific, identifiable person; topics like scholarships, financial aid, fees or grading policy are not sensitive
+- [ ] Validate, publish v9, activate, read back, confirm in trace

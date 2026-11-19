@@ -10,3 +10,4 @@
 2026-10-27T18:31:24Z | 98d70d6d | create QueueRoutingConfig | Password_Support_Routing 0K9ak000001zVntCAE (approved by Lal Shaik)
 2026-11-19T17:06:46Z | af221bec | survey | Phase 6 Step 1 read-only survey of lal-devedition complete
 2026-11-19T17:23:25Z | af221bec | deploy+publish+users | POC_Knowledge_Agent_User deployed; Knowledge agent v8 active; Employees A,B created
+2026-11-19T17:52:10Z | af221bec | publish | POC_Knowledge_Agent v9 active (sensitive-data routing fix); preview scholarship intake reached summary, no Case; Lal test Case 00001041/SUB-000016 noted, baseline now 14/14
