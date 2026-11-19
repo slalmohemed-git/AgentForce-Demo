@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Submission_Id__c</fullName>
+    <label>Submission Id</label>
+    <description>Idempotency key generated once per confirmed submission by the Case agent. Unique and case-sensitive so a retry cannot create a second Case. Origin: POC-Antioch Phase 1.</description>
+    <inlineHelpText>Unique key for one confirmed submission. A second log with the same key is rejected.</inlineHelpText>
+    <type>Text</type>
+    <length>80</length>
+    <required>true</required>
+    <unique>true</unique>
+    <caseSensitive>true</caseSensitive>
+    <externalId>true</externalId>
+</CustomField>

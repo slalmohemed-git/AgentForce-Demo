@@ -3,48 +3,50 @@
 > **Rewritten at the end of every session.** This file is *now*; [`gotchas.md`](gotchas.md) is *forever*.
 > If this file and [`../CONTEXT.md`](../CONTEXT.md) disagree, this one is newer.
 
-**Last updated:** 2026-10-28 · **By:** Orchestrate build session (Demo-AgentBuild-UseCase-1)
+**Last updated:** 2026-11-19 · **By:** Orchestrate build session (Poc-Antioch-Build-p1)
 
 ---
 
 ## Where things stand
 
-The UC Assist password-reset build (43 components) is deployed to `lal-devedition`. The `UC_Assist`
-Agent Script bundle is published and **version 1 is Active** (BotVersion `0X9ak000007eFPJCA2`, checked
-2026-10-28). The end-to-end tests T1–T8 have not been run yet, and the outgoing sender address still needs verifying.
+**POC Phase 1 (schema and access) is done** and deployed to `lal-devedition` (deploy `0Afak00000tTsOjCAK`,
+16 of 16 components). Read back on 2026-11-19:
 
-## In progress
+- `POC_Submission_Log__c`: Auto Number `SUB-{000000}`, Private, 7 fields. `Submission_Id__c` is Text(80),
+  Unique (case-sensitive), External ID. A duplicate key was rejected and a lowercase key was accepted.
+  The validation rule `Requester_Required` rejects a log with no Requester. (A User lookup can't be made
+  required at field level, so a rule does it.) The test records were deleted; the object is empty.
+- Case Origin now includes **Agent**. Case Type now includes **General Inquiry**, **Access Request** and
+  **Technical Issue**. The existing values are unchanged. Priority is unchanged.
+- No `Submission_Log__c` back-link on Case: `POC_Submission_Log__c.Case__c` already joins them.
+- Permission sets: `POC_Case_Agent_Access` (Case and log: Read, Create, Edit, no Delete, View All or Modify All),
+  `POC_Knowledge_Agent_Access` (Knowledge__kav Read, `Article_Body__c` Read, no Case),
+  `POC_Submission_Log_Audit` (log Read only).
 
-| What | State | Where it lives | Blocked on |
-|---|---|---|---|
-| Tests T1–T8 (spec test scripts) | Not run | Agentforce Builder test panel | Nothing |
-| Org-wide sender address | Verification email sent, not clicked | Setup → Organization-Wide Addresses | Lal clicking the link |
-| PR develop → main | Open | GitHub | Review |
+The UC Assist and Staff_Assistant builds were not touched.
+
+## Assigned by hand (not in the repo)
+
+A fresh org needs these redone:
+
+| User | What | Why |
+|---|---|---|
+| POC Agent (`poc.agent.e68b5eeb6b@example.com`, `005ak00000oV1FxAAK`, Einstein Agent User profile) | User created; licence AgentforceServiceAgentUserPsl; permission sets AgentforceServiceAgentUser, POC_Case_Agent_Access, POC_Knowledge_Agent_Access | Running user for the POC agents. Publishing fails with a 401 without AgentforceServiceAgentUser. |
+| Lal (`slalmohemed.c437bd0a8ab7@agentforce.com`) | POC_Case_Agent_Access | So Lal could run the duplicate-key test. Lal already had AgentPlatformBuilder for publishing. |
 
 ## Next steps
 
-<!-- Ordered. The top item should be the one to do next, not the most interesting one. -->
-
-1. Click the verification link sent to slalmohemed@gmail.com, then confirm the address shows Verified.
-2. Run T1–T8 in the Agentforce Builder test panel and check the plan tracer each turn.
-3. Save T1–T8 as an Agentforce Testing Center test set.
-4. Review and merge the PR from `develop` to `main`.
-
-## Waiting on someone else
-
-| What | Who | Since | Chased? |
-|---|---|---|---|
-| Sender address verification | Lal Shaik | 2026-10-28 | No |
+1. **Phase 2: the Flow** that reserves a `POC_Submission_Log__c` row and creates the Case. Add the Flow's
+   access (`<flowAccesses>`) to `POC_Case_Agent_Access` in that phase.
+2. Decide after Phase 6 whether `POC_Submission_Log__c` gets a tab.
+3. Older, still open: the UC Assist tests T1–T8, the sender address, and the PR from `develop` to `main`.
 
 ## Things the next session should know
 
-<!-- Anything true right now that is not obvious from the code: a half-finished refactor, a
-     deliberately disabled test, a workaround that needs removing, a deploy that is half-applied.
-     If you leave something in a strange state, this is where you say so. -->
-
-- Two permission sets were assigned by hand in the org to make publish work (see gotchas.md). They are
-  not in the repo's permission set group yet, so a fresh org setup needs them assigned again.
-- Test data (users, customers, portal users) is created by the scripts in `scripts/apex/`, run in order 01 → 03.
+- Submission_Id__c and Status__c don't appear in the permission sets' field permissions because both are
+  required fields, and Salesforce always grants access to required fields.
+- Lal's user couldn't see the log fields until POC_Case_Agent_Access was assigned: System Administrator has
+  no field access to new custom fields in this org.
 
 <!-- orchestrate:session-state:start -->
 <!-- Written by Orchestrate at the end of each session. Edits inside this block are

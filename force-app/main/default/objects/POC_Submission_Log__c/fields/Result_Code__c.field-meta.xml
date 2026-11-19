@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Result_Code__c</fullName>
+    <label>Result Code</label>
+    <description>Last result code returned by the Case creation Flow. Origin: POC-Antioch Phase 1.</description>
+    <inlineHelpText>Short code for the last Flow result.</inlineHelpText>
+    <type>Text</type>
+    <length>40</length>
+    <required>false</required>
+    <unique>false</unique>
+    <externalId>false</externalId>
+</CustomField>

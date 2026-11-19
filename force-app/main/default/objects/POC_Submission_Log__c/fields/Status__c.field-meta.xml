@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Status__c</fullName>
+    <label>Status</label>
+    <description>Lifecycle of the submission: Reserved when the key is claimed, Created when the Case exists, Failed when the Flow could not create it. Origin: POC-Antioch Phase 1.</description>
+    <inlineHelpText>Reserved, Created or Failed.</inlineHelpText>
+    <type>Picklist</type>
+    <required>true</required>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>Reserved</fullName><default>true</default><label>Reserved</label></value>
+            <value><fullName>Created</fullName><default>false</default><label>Created</label></value>
+            <value><fullName>Failed</fullName><default>false</default><label>Failed</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

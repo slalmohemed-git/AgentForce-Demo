@@ -21,4 +21,9 @@
         <default>false</default>
         <label>Chat</label>
     </standardValue>
+    <standardValue>
+        <fullName>Agent</fullName>
+        <default>false</default>
+        <label>Agent</label>
+    </standardValue>
 </StandardValueSet>
